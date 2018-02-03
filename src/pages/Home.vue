@@ -58,29 +58,27 @@
 
 <script>
 export default {
-  name: 'HelloWorld',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    }
+  name: 'Home',
+  head: {
+    title: 'Zumi - Compre e venda imóveis, sem terceiros',
+    description: 'Imóveis Imóveis Imóveis'
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1, h2 {
-  font-weight: normal;
+<style scoped lang=scss>
+@import '../assets/_variables.scss';
+
+section.hero {
+  background-repeat: no-repeat;
+  background-size: cover;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+
+@media only screen and (max-width: $largestMobileScreen) {
+  section.hero { background-image: url('../assets/images/pages/home/home-tv-v5.jpg') !important; }
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+
+@media only screen and (min-width: $tabletBreakpoint) {
+  section.hero { background-image: url('../assets/images/pages/home/home-tv-v5.jpg') !important; }
 }
 </style>

@@ -1,0 +1,42 @@
+// Bulma
+@import "~bulma/sass/utilities/initial-variables";
+@import "~bulma/sass/utilities/functions";
+
+$app-font: 'Montserrat', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+
+/////////////////////////////////
+// Colors
+$blue: rgb(0, 147, 221); //blue zumi color
+$primary : $blue;
+$title-color: $grey-darker;
+
+/////////////////////////////////////////////////////////////////////
+//////////////////////// IMPORTANT //////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+// This file is imported in many other files, so don't define classes
+// here or they will be inlined several times in the same page.
+
+// sass-lint:disable space-before-colon no-color-hex hex-length
+
+/////////////////////////////////
+// Z-Indexs
+$index_space:   4;
+$index_sky:     3;
+$index_trees:   2;
+$index_ground:  1;
+$index_zero:    0;
+
+/////////////////////////////////
+// Breakpoints
+$mobileBreakpoint            : 320px;
+$tabletBreakpoint            : 768px;
+$computerBreakpoint          : 990px;
+$largeMonitorBreakpoint      : 990px;
+$widescreenMonitorBreakpoint : 1920px;
+
+$largestMobileScreen : ($tabletBreakpoint - 1px);
+$largestTabletScreen : ($computerBreakpoint - 1px);
+$largestSmallMonitor : ($largeMonitorBreakpoint - 1px);
+$largestLargeMonitor : ($widescreenMonitorBreakpoint - 1px);
+
+@import "~bulma/sass/utilities/derived-variables.sass";
