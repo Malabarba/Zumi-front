@@ -21,16 +21,6 @@ export default {
 @import 'assets/_variables.scss';
 @import "~bulma/bulma";
 
-.hidden-mobile {
-  display: none;
-}
-
-@media only screen and (min-width: $tabletBreakpoint) {
-  .hidden-mobile {
-    display: block;
-  }
-}
-
 .si-content {
   width: 400px;
   max-width: calc(90vw) !important;
@@ -39,6 +29,12 @@ export default {
 
 .si-content-wrapper {
   padding: 5px !important;
+}
+
+section.hero {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 #app {

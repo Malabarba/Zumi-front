@@ -37,10 +37,9 @@
 import ListingFilterBox from '@/components/ListingFilterBox'
 import ListingSnippet from '@/components/ListingSnippet'
 import { buildMeta } from './meta.service'
-// import { MetaService } from './meta.service';
-// import { ListingService, Listing, Geo } from '../services/listing';
+import { Listing } from '@/models'
+import Api from '@/api'
 
-// interface Group<T> { key: any; group: T[]; }
 function averageGeo(gs) {
   if (!gs.length) return null
   const add = (x, y) => x + y
@@ -60,32 +59,36 @@ function groupBy(xs, f) {
 export default {
   name: 'ListingIndex',
   head: buildMeta({
-    title: 'Zumi - Busca de Imóveis',
+    title: 'Busca de Imóveis',
     description: 'Escolha seus filtros e busque um imóvel para comprar em São Paulo.'
   }),
   components: {ListingFilterBox, ListingSnippet},
   props: {hasMap: {type: Boolean, required: true}},
   data() {
     return {
-      listings: null,
-      displayedListings: null,
-      markers: null,
+      listings: [],
+      displayedListings: [],
+      markers: [],
       mapCenter: null,
       filters: [{ label: 'filtro-1' }, { label: 'filtro-2' }],
       q: this.$route.query
     }
   },
-  // routeSub: this.route.queryParams.subscribe(q => this.searchFor(q));
-  methods: {
-    searchFor() {
-      const query = {}
-      for (const key of this.q) {
-        if (key !== 'mode') query[`q[${key}]`] = this.q[key]
+  created() {
+    const query = {}
+    let doSearch = false
+    for (const key of Object.keys(this.q)) {
+      if (key !== 'mode') {
+        query[`q[${key}]`] = this.q[key]
+        doSearch = true
       }
-      // this.listingService.index(query)
-      //     .subscribe(data => this.setListings(data.listings.map(Listing.from)))
-    },
+    }
+    if (!doSearch) return
+    Api.listing.index(query)
+       .then(data => this.setListings(data.listings.map(Listing.from)))
+  },
 
+  methods: {
     removeFilter(label) {
       this.filters = this.filters.filter(f => f.label !== label)
     },
@@ -107,6 +110,10 @@ export default {
 
 h1 {
   color: $title-color !important;
+}
+
+section.hero {
+  background-image: url('../assets/images/pages/home/home-tv-v5.jpg') !important;
 }
 
 #search-map {

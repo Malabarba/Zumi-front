@@ -48,7 +48,7 @@
         <div class="control">
           <div class="select" :ngClass="{ 'is-loading': !nbOptions.length }">
             <select v-model="q.neighborhood_eq" :disabled="!nbOptions.length">
-              <option>Bairro</option>
+              <option :value="undefined">Bairro</option>
               <option v-for="o in nbOptions" :key="o.value" :value="o.value">{{ o.label }}</option>
             </select>
           </div>
@@ -68,7 +68,7 @@
 
       <div class="is-flex-mobile column field">
         <div class="control">
-          <router-link class="button is-primary" :to="{path: '/imoveis', query: q}">Buscar</router-link>
+          <router-link class="button is-secondary" :to="{path: '/imoveis', query: q}">Buscar</router-link>
         </div>
       </div>
 
@@ -78,13 +78,12 @@
 </template>
 
 <script>
-// import { ListingService, Listing } from '@/services/listing'
-// import { Money } from './money'
+import Api from '@/api'
 
 export default {
   data() {
     return {
-      nbOptions: [],
+      neighborhoods: [],
       sortingOptions: [{ value: 'price_cents desc', label: 'Preço, maior ao menor' },
                        { value: 'price_cents asc', label: 'Preço, menor ao maior' },
                        { value: 'usable_size desc', label: 'Área, maior ao menor' },
@@ -93,20 +92,17 @@ export default {
                        { value: 'price_per_area asc', label: 'Preço/m², menor ao maior' }],
       q: this.$route.query
     }
+  },
+  computed: {
+    nbOptions() {
+      return this.neighborhoods.map(
+        (n) => ({ value: n.name, label: `${n.name} (${n.count})` }))
+    }
+  },
+  created() {
+    Api.listing.neighborhoods().then(data => { this.neighborhoods = data.neighborhoods })
   }
 }
-
-// export default { name: 'ListingFilterBoxComponent',
-//   public nbhObs = this.listingService.neighborhoods();
-//
-//   public neighborhoodAsOption(n: { name: string, count: number }): any {
-//     return { value: n.name, label: `${n.name} (${n.count})` };
-//   }
-//
-//   public toMoney(n: string): Money {
-//     return Money.fromString(n);
-//   }
-// }
 </script>
 
 <style scoped lang="scss">

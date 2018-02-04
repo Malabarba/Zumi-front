@@ -23,6 +23,7 @@ module.exports = {
   rules: {
     indent: 'off',
     curly: 'off',
+    camelcase: 'off',
     'space-before-function-paren': 'off',
     // allow async-await
     'generator-star-spacing': 'off',

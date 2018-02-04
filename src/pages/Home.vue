@@ -72,11 +72,6 @@ export default {
 <style scoped lang="scss">
 @import '../assets/_variables.scss';
 
-section.hero {
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
 @media only screen and (max-width: $largestMobileScreen) {
   section.hero { background-image: url('../assets/images/pages/home/home-tv-v5.jpg') !important; }
 }
