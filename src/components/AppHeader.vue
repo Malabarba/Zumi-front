@@ -5,10 +5,10 @@
     <div class="container">
       <div class="navbar-brand">
         <router-link class="navbar-item" to="/">
-          <img src="../assets/images/logo.png"/>
+          <img src="../assets/images/logo.svg"/>
         </router-link>
 
-        <router-link class="navbar-item is-hidden-desktop" to="/">Login</router-link>
+        <router-link class="navbar-item is-hidden-desktop" to="/login">Login</router-link>
 
         <div id="navbarBurger" class="navbar-burger burger" data-target="navMenuDocumentation">
           <span></span>
