@@ -1,19 +1,24 @@
 <template>
   <div id="app">
+    <fullscreen-gallery/>
+    <app-header/>
     <router-view/>
   </div>
 </template>
 
 <script>
+import AppHeader from './components/AppHeader.vue'
+import FullscreenGallery from './components/FullscreenGallery.vue'
+
 export default {
-  name: 'App'
+  name: 'App',
+  components: { AppHeader, FullscreenGallery }
 }
 </script>
 
 <style lang="scss">
 // Core Declarations
 @import 'assets/_variables.scss';
-
 @import "~bulma/bulma";
 
 .hidden-mobile {

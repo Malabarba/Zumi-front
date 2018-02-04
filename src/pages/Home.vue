@@ -3,7 +3,7 @@
     <section class="hero is-medium is-bold">
       <div class="hero-body">
         <header class="section container">
-          <!-- <button class="button is-primary is-large" routerLink="/imoveis">Ver Imóveis</button> -->
+          <!-- <button class="button is-primary is-large" to="/imoveis">Ver Imóveis</button> -->
           <listing-filter-box>
             <div class="has-text-centered"><h1 class="title">Encontre sua casa dos sonhos em São Paulo</h1></div>
           </listing-filter-box>
@@ -27,7 +27,7 @@
               repellendus.</p>
           </div>
           <div class="has-text-centered">
-            <a class="button is-primary" routerLink="/imoveis">Ver Imóveis</a>
+            <router-link class="button is-primary" to="/imoveis">Ver Imóveis</router-link>
           </div>
         </article>
 
@@ -45,28 +45,30 @@
               repellendus.</p>
           </div>
           <div class="has-text-centered">
-            <a class="button is-primary" routerLink="/imoveis">Quero Vender</a>
+            <router-link class="button is-primary" to="/imoveis">Quero Vender</router-link>
           </div>
         </article>
       </div>
     </section>
 
-    <!-- FOOTER -->
-    <app-footer></app-footer>
+    <app-footer/>
   </div>
 </template>
 
 <script>
+import ListingFilterBox from '@/components/ListingFilterBox.vue'
+
 export default {
   name: 'Home',
   head: {
     title: 'Zumi - Compre e venda imóveis, sem terceiros',
     description: 'Imóveis Imóveis Imóveis'
-  }
+  },
+  components: { ListingFilterBox }
 }
 </script>
 
-<style scoped lang=scss>
+<style scoped lang="scss">
 @import '../assets/_variables.scss';
 
 section.hero {
