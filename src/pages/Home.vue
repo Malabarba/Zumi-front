@@ -56,14 +56,15 @@
 </template>
 
 <script>
+import { buildMeta } from './meta.service'
 import ListingFilterBox from '@/components/ListingFilterBox.vue'
 
 export default {
   name: 'Home',
-  head: {
+  head: buildMeta({
     title: 'Zumi - Compre e venda imóveis, sem terceiros',
     description: 'Imóveis Imóveis Imóveis'
-  },
+  }),
   components: { ListingFilterBox }
 }
 </script>

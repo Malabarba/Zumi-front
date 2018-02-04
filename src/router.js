@@ -1,16 +1,21 @@
 import Vue from 'vue'
+import VueHead from 'vue-head'
 import Router from 'vue-router'
 import Home from '@/pages/Home'
-// import ListingIndex from '@/pages/ListingIndex'
-// import ListingShow from '@/pages/ListingShow'
+import HowItWorks from '@/pages/HowItWorks'
+import ListingIndex from '@/pages/ListingIndex'
+import ListingShow from '@/pages/ListingShow'
 
+Vue.use(VueHead)
 Vue.use(Router)
 
 export default new Router({
   mode: 'history',
   routes: [
     {path: '/', name: 'Home', component: Home},
-    // {path: '/imoveis', name: 'ListingIndex', component: ListingIndex, props: true},
-    // {path: '/imovel/:uniq_hash', name: 'ListingShow', component: ListingShow, props: true},
+    {path: '/como-funciona', name: 'HowItWorks', component: HowItWorks},
+    {path: '/imoveis', props: {hasMap: false}, name: 'ListingIndex', component: ListingIndex},
+    {path: '/imoveis-no-mapa', props: {hasMap: true}, name: 'ListingMap', component: ListingIndex},
+    {path: '/imovel/:uniq_hash', props: true, name: 'ListingShow', component: ListingShow}
   ]
 })
