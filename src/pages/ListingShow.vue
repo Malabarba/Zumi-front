@@ -12,7 +12,7 @@
           <header class="card-header">
             <div class="card-header-title">
               <div>
-                <h1 class="title">{{ listing.price }}</h1>
+                <h1 class="title">{{ listing.price.toString() }}</h1>
                 <h2 class="subtitle">{{ listing.property.type_text }} · {{ listing.property.address.neighborhood }}</h2>
               </div>
             </div>
@@ -35,7 +35,8 @@
 
 <script>
 import { buildMeta } from './meta.service'
-// import { ListingService, Listing } from '../services/listing'
+import { Listing } from '@/models'
+import Api from '@/api'
 
 export default {
   name: 'ListingShow',
@@ -48,6 +49,8 @@ export default {
   data() {
     return { listing: null }
   },
+  created() { this.getListing() },
+
   computed: {
     galleryImages() {
       if (!this.listing) return []
@@ -58,19 +61,17 @@ export default {
                               url: p.file.url,
                               description: p.description || '' }))
     }
+  },
+
+  methods: {
+    getListing() {
+      Api.listing.show(this.uniq_hash).then(this.setListing)
+    },
+
+    setListing(data) {
+      this.listing = Listing.from(data.listing)
+    }
   }
-
-  // ngOnInit() {
-  //   this.sub = this.route.params.subscribe(params => {
-  //     this.uniq_hash = params.uniq_hash
-  //     this.listingService.show(this.uniq_hash)
-  //                            .subscribe(data => this.setListing(data.listing))
-  //   })
-  // }
-
-  // private setListing(json: Listing) {
-  //   this.listing = Listing.from(json)
-  // }
 }
 </script>
 
