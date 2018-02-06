@@ -90,7 +90,7 @@ export default {
                        { value: 'usable_size asc', label: 'Área, menor ao maior' },
                        { value: 'price_per_area desc', label: 'Preço/m², maior ao menor' },
                        { value: 'price_per_area asc', label: 'Preço/m², menor ao maior' }],
-      q: this.$route.query
+      q: {...this.$route.query}
     }
   },
   computed: {
@@ -99,8 +99,13 @@ export default {
         (n) => ({ value: n.name, label: `${n.name} (${n.count})` }))
     }
   },
+  methods: {
+    setQ() { this.q = {...this.$route.query} }
+  },
+  watch: { '$route': 'setQ' },
   created() {
-    Api.listing.neighborhoods().then(data => { this.neighborhoods = data.neighborhoods })
+    Api.listing.neighborhoods()
+       .then(data => { this.neighborhoods = data.neighborhoods })
   }
 }
 </script>
