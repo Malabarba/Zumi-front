@@ -63,6 +63,7 @@ export default {
     description: 'Escolha seus filtros e busque um imóvel para comprar em São Paulo.'
   }),
   components: {ListingFilterBox, ListingSnippet},
+
   props: {hasMap: {type: Boolean, required: true}},
   data() {
     return {
@@ -71,29 +72,34 @@ export default {
       markers: [],
       mapCenter: null,
       filters: [{ label: 'filtro-1' }, { label: 'filtro-2' }],
-      q: this.$route.query
+      q: {}
     }
   },
-  created() {
-    const query = {}
-    let doSearch = false
-    for (const key of Object.keys(this.q)) {
-      if (key !== 'mode') {
-        query[`q[${key}]`] = this.q[key]
-        doSearch = true
-      }
-    }
-    if (!doSearch) return
-    Api.listing.index(query)
-       .then(data => this.setListings(data.listings.map(Listing.from)))
-  },
+  created() { this.doSearch(this.$route.query) },
+  beforeRouteUpdate(to, _from, next) { this.doSearch(to.query); next() },
 
   methods: {
+    doSearch(q) {
+      this.q = {...q}
+      this.setListings(null)
+      const query = {}
+      for (const key of Object.keys(this.q)) {
+        if (key !== 'mode') query[`q[${key}]`] = this.q[key]
+      }
+      console.log('query', query)
+      Api.listing.index(query)
+             .then(data => this.setListings(data.listings.map(Listing.from)))
+    },
+
     removeFilter(label) {
       this.filters = this.filters.filter(f => f.label !== label)
     },
 
     setListings(listings) {
+      if (!listings) {
+        this.listings = this.markers = this.mapCenter = null
+        return
+      }
       this.listings = listings
       this.markers = groupBy(listings, l => l.property.address.zip_code)
         .map(g => ({ geo: averageGeo(g.group.map(l => l.property.address)),
