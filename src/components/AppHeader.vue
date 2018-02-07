@@ -1,6 +1,6 @@
 <template>
-  <nav class="navbar is-fixed-top">
-    <div id="specialShadow" class="bd-special-shadow" style="opacity: 0; transform: scaleY(1);"></div>
+  <nav id="header" class="navbar is-fixed-top">
+    <div class="special-shadow"></div>
 
     <div class="container">
       <div class="navbar-brand">
@@ -33,28 +33,29 @@
   </nav>
 </template>
 
-<script>
-export default {}
-</script>
+<script>export default {}</script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import '../assets/_variables.scss';
 
-.navbar-menu .router-link-active {
-  border-bottom: 5px solid;
-}
+nav#header {
+  .special-shadow {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), transparent);
+    height: 8px;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 100%;
+  }
 
-nav {
-  // -webkit-box-shadow: 0 8px 6px -6px #999;
-  // -moz-box-shadow: 0 8px 6px -6px #999;
-  // box-shadow: 0 8px 6px -6px #999;
-  // NgxGallery uses 1000
-  z-index: 3000 !important;
-}
+  .navbar-menu .router-link-active {
+    border-bottom: 5px solid;
+  }
 
-.navbar-brand img {
-  margin-top: 0;
-  margin-bottom: 0;
-  max-height: 2.2rem;
+  .navbar-brand img {
+    margin-top: 0;
+    margin-bottom: 0;
+    max-height: 2.2rem;
+  }
 }
 </style>
