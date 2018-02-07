@@ -1,5 +1,5 @@
 <template>
-  <div class="box">
+  <div class="box" id="FilterBox">
     <content></content>
 
     <div class="columns is-multiline">
@@ -110,16 +110,10 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import '../assets/_variables.scss';
 
-.neighborhoods select {
-  min-width: 11em !important;
-  max-width: 11em !important;
-  width: 11em !important;
-}
-
-.box {
+#FilterBox {
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
@@ -128,13 +122,19 @@ export default {
   > div:not(:first-child) {
     margin-top: 1em;
   }
-}
 
-input[type=number].count {
-  max-width: 4em;
-}
+  .neighborhoods select {
+    min-width: 11em !important;
+    max-width: 11em !important;
+    width: 11em !important;
+  }
 
-.column {
-  justify-content: center;
+  input[type=number].count {
+    max-width: 4em;
+  }
+
+  .column {
+    justify-content: center;
+  }
 }
 </style>
