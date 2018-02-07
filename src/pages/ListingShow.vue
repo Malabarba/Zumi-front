@@ -1,6 +1,6 @@
 <template>
   <section v-if="listing" id="show" class="container section">
-    <nav class="level"><router-link class="level-start" to="/imoveis">Voltar à busca</router-link></nav>
+    <nav class="level"><a class="level-start" @click="$router.go(-1)">Voltar à busca</a></nav>
 
     <div class="columns">
       <div class="column is-8">
