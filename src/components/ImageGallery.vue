@@ -1,26 +1,30 @@
 <template>
   <div class="root">
-    <figure v-if="images.length && images[selected]" class="level is-marginless" :style="figureStyle">
+    <figure v-if="images.length && images[selected]"
+            class="level is-marginless" :style="figureStyle">
       <span class="level-left arrow"
             @click="setSelected(selected - 1)"
             :class="{ 'is-invisible': selected === 0 }">
-        <f-a i="arrow-circle-left 2x"></f-a>
+        <f-a i="arrow-left 3x"/>
       </span>
       <div @click="openFullscreen()" class="description is-size-4">
         <p>{{ selected + 1 }}/{{ images.length }} {{ images[selected].description }}</p>
-        <div v-if="canFullscreen" class="fullscreen-icon level"
-             :class="{ clickable: canFullscreen }"><f-a i="expand 2x" class="level-item"></f-a></div>
+        <div v-if="canFullscreen" class="fullscreen-icon"
+             :class="{ clickable: canFullscreen }">
+          <f-a i="expand 2x"/>
+        </div>
       </div>
       <span :class="{ 'is-invisible': selected + 1 === images.length }"
             @click="setSelected(selected + 1)" class="level-right arrow">
-        <f-a i="arrow-circle-right 2x"></f-a>
+        <f-a i="arrow-right 3x"/>
       </span>
     </figure>
+
     <nav class="level thumbnails" v-if="thumbnails" >
       <span class="level-left arrow"
             @click="setSelected(thumbsPerRow * (selectedThumbs - 1))"
             :class="{ 'is-invisible': selectedThumbs === 0 }">
-        <f-a i="arrow-circle-left 2x"></f-a>
+        <f-a i="arrow-left 2x"/>
       </span>
       <div v-for="(image, i) in visibleThumbs" :key="i"
            class="level-item" :style="{ height: ''+ (height / 6) + 'px'}"
@@ -30,7 +34,7 @@
       <span class="level-right arrow"
             @click="setSelected(thumbsPerRow * (selectedThumbs + 1))"
             :class="{ 'is-invisible': selectedThumbs + 1 >= images.length / thumbsPerRow }">
-        <f-a i="arrow-circle-right 2x"></f-a>
+        <f-a i="arrow-right 2x"/>
       </span>
     </nav>
   </div>
@@ -43,7 +47,6 @@ export const fullscreenGalleryData = {input: null} // = new EventEmitter();
 
 export default {
   name: 'ImageGallery',
-  components: {},
   props: {
     images: {default: [], required: true},
     height: {type: Number, required: true},
@@ -109,11 +112,11 @@ figure {
 }
 
 f-a, i, svg {
-  color: $primary-invert;
+  padding: 8px;
+  color: $primary;
+  background-color: $secondary30;
 
-  .thumbnails & {
-    color: $primary-invert;
-  }
+  .arrow & { border-radius: 100%; }
 }
 
 .arrow {
@@ -121,18 +124,19 @@ f-a, i, svg {
   height: 100%;
   cursor: pointer;
 
-  figure &.level-right { paddileft: 20%;}
-  figure &.level-left { paddiright: 20%; }
+  figure & {
+    &.level-right { padding-left: 20%; }
+    &.level-left { padding-right: 20%; }
+  }
 
   &:hover {
-    f-a, i, svg { color: $primary; }
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: $secondary30;
+    f-a, i, svg { background-color: initial; }
   }
 }
 
 .thumbnails {
   margin-top: .5em;
-  // height: 10%;
 
   .level-item {
     max-height: 100% !important;
@@ -141,7 +145,6 @@ f-a, i, svg {
     img {
       max-height: 100%;
       max-width: 100%;
-      // padding: 0.2em;
     }
   }
 }
@@ -161,15 +164,18 @@ f-a, i, svg {
 
   .fullscreen-icon {
     height: 100%;
+    vertical-align: center;
 
     &.clickable { cursor: pointer; }
     f-a, i, svg {
       visibility: hidden;
       margin: auto;
+      position: absolute;
+      top: 40%;
     }
-    &:hover f-a, &:hover i, &:hover svg {
-      visibility: initial;
-    }
+  }
+  &:hover f-a, &:hover i, &:hover svg {
+    visibility: initial;
   }
 }
 </style>
