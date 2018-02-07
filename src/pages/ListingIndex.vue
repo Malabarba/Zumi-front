@@ -8,12 +8,13 @@
       </div>
     </section>
 
-    <section v-if="!hasMap" id="lista" class="section">
+    <section v-if="!hasMap" id="lista" class="section container">
       <div v-if="!listings" class="loader">
       </div>
       <div class="columns is-multiline">
-        <listing-snippet v-for="listing in listings" :listing="listing" :key="listing.uniq_hash"
-                         class="column is-4"/>
+        <div v-for="listing in listings" :key="listing.uniq_hash" class="column is-4">
+          <listing-snippet :listing="listing"/>
+        </div>
       </div>
     </section>
 
