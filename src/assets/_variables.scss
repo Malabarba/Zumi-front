@@ -20,8 +20,8 @@ $title-color: $grey-darker;
 
 /////////////////////////////////
 // Z-Indexs
-$index_space:   4;
-$index_sky:     3;
+$index_above_overlay: 20000;
+$index_overlay: 10000;
 $index_trees:   2;
 $index_ground:  1;
 $index_zero:    0;

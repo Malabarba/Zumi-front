@@ -18,12 +18,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import '../assets/_variables.scss';
+
 .root {
   position: fixed;
   width: calc(100vw);
   height: calc(100vh);
   background-color: rgba(0, 0, 0, 0.9);
-  z-index: 10000;
+  z-index: $index_overlay;
 }
 
 a.delete {
@@ -34,6 +36,7 @@ a.delete {
   width: calc(8vw) !important;
   max-height: calc(8vw) !important;
   max-width: calc(8vw) !important;
+  z-index: $index_above_overlay;
 
   &:hover {
     background-color: rgba(255, 255, 255, 0.4);
