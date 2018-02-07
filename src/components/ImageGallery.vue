@@ -109,7 +109,11 @@ figure {
 }
 
 f-a, i, svg {
-  color: $primary;
+  color: $primary-invert;
+
+  .thumbnails & {
+    color: $primary-invert;
+  }
 }
 
 .arrow {
