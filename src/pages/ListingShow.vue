@@ -4,7 +4,7 @@
 
     <div class="columns">
       <div class="column is-8">
-        <image-gallery height="449" thumbnails="true" :images="galleryImages"/>
+        <image-gallery :height="449" :thumbnails="true" :images="galleryImages"/>
       </div>
 
       <div class="column">
@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import ImageGallery from '@/components/ImageGallery'
 import { buildMeta } from './meta.service'
 import { Listing } from '@/models'
 import Api from '@/api'
@@ -44,7 +45,7 @@ export default {
     title: 'Compre e venda imóveis, sem terceiros',
     description: 'Imóveis Imóveis Imóveis'
   }),
-  components: {},
+  components: {ImageGallery},
   props: ['uniq_hash'],
   data() {
     return { listing: null }
