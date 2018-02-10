@@ -38,7 +38,6 @@
 import ListingFilterBox from '@/components/ListingFilterBox'
 import ListingSnippet from '@/components/ListingSnippet'
 import { buildMeta } from './meta.service'
-import { Listing } from '@/models'
 import Api from '@/api'
 
 function averageGeo(gs) {
@@ -88,8 +87,7 @@ export default {
         if (key !== 'mode') query[`q[${key}]`] = this.q[key]
       }
       console.log('query', query)
-      Api.listing.index(query)
-             .then(data => this.setListings(data.listings.map(Listing.from)))
+      Api.listing.index(query).then(this.setListings)
     },
 
     removeFilter(label) {

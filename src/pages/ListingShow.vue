@@ -36,7 +36,6 @@
 <script>
 import ImageGallery from '@/components/ImageGallery'
 import { buildMeta } from './meta.service'
-import { Listing } from '@/models'
 import Api from '@/api'
 
 export default {
@@ -66,11 +65,7 @@ export default {
 
   methods: {
     getListing() {
-      Api.listing.show(this.uniq_hash).then(this.setListing)
-    },
-
-    setListing(data) {
-      this.listing = Listing.from(data.listing)
+      Api.listing.show(this.uniq_hash).then(l => this.listing = l)
     }
   }
 }

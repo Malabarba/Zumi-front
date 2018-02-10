@@ -24,6 +24,7 @@ module.exports = {
     indent: 'off',
     curly: 'off',
     camelcase: 'off',
+    'no-return-assign': 'off',
     'space-before-function-paren': 'off',
     // allow async-await
     'generator-star-spacing': 'off',
