@@ -36,7 +36,7 @@ export default {
              validations: Object.keys(this.spec) }
   },
 
-  create() { this.$emit('valid', !iv.$invalid) },
+  create() { this.emitError() },
 
   validations() {
     const spec = {}
@@ -47,11 +47,16 @@ export default {
     return { innerValue: spec }
   },
 
+  methods: {
+    emitError() {
+      this.$emit('error', this.errorMessage || this.$v.innerValue.$invalid)
+    }
+  },
+
   computed: {
     hasError() {
-      const iv = this.$v.innerValue
-      this.$emit('valid', !iv.$invalid)
-      return iv.$error
+      this.emitError()
+      return this.$v.innerValue.$error
     },
 
     errorMessage() {
@@ -60,12 +65,14 @@ export default {
       if (!errorKey || !errorKey.length) return
 
       const p = this.$v.innerValue.$params
-      if (errorKey === 'required') return `não pode ficar em branco.`
-      else if (errorKey === 'email') return `não é um email válido.`
-      else if (errorKey === 'minLength') return `deve ter ${p.minLength.min} ou mais caracteres.`
-      else if (errorKey === 'maxLength') return `deve ter no máximo ${p.maxLength.max} caracteres.`
-      else if (errorKey === 'minValue') return `deve ser pelo menos ${p.minValue.min}.`
-      else if (errorKey === 'maxValue') return `deve ser no máximo ${p.maxValue.max}.`
+      let m
+      if (errorKey === 'required') m = `não pode ficar em branco.`
+      else if (errorKey === 'email') m = `não é um email válido.`
+      else if (errorKey === 'minLength') m = `deve ter ${p.minLength.min} ou mais caracteres.`
+      else if (errorKey === 'maxLength') m = `deve ter no máximo ${p.maxLength.max} caracteres.`
+      else if (errorKey === 'minValue') m = `deve ser pelo menos ${p.minValue.min}.`
+      else if (errorKey === 'maxValue') m = `deve ser no máximo ${p.maxValue.max}.`
+      return m ? `${this.label} ${m}` : ''
     }
   }
 }
