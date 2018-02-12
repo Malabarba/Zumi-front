@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer is-paddingless">
+  <footer v-once class="footer is-paddingless">
     <div class="section container">
       <div class="columns">
         <div class="column">
