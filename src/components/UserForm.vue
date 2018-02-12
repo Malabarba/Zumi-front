@@ -18,10 +18,10 @@
 
     <div class="field is-grouped">
       <div class="control">
-        <div class="button is-link" @click="create()">Enviar</div>
+        <btn l="Enviar" @click="create()"/>
       </div>
       <div class="control">
-        <button class="button is-text" @click="$router.go(-1)">Cancelar</button>
+        <btn l="Cancelar" as="text" type="reset" @click="$router.go(-1)"/>
       </div>
     </div>
   </form>

@@ -3,7 +3,6 @@
     <section class="hero is-medium is-bold">
       <div class="hero-body">
         <header class="section container">
-          <!-- <button class="button is-primary is-large" to="/imoveis">Ver Imóveis</button> -->
           <listing-filter-box>
             <div class="has-text-centered"><h1 class="title">Encontre sua casa dos sonhos em São Paulo</h1></div>
           </listing-filter-box>

@@ -21,7 +21,7 @@
             <div v-for="detail in listing.descList" :key="detail.label" class="card-details">
               <f-a :i="detail.icon"></f-a> <strong>{{ detail.value }}</strong> {{ detail.label }}
             </div>
-            <button class="button is-large">Quero Visitar</button>
+            <btn class="is-large" l="Quero Visitar"/>
           </div>
           <footer class="card-footer">
             <a href="#" class="card-footer-item">Quero Informações</a>
