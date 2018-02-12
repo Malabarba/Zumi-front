@@ -1,24 +1,32 @@
 <template>
-  <form>
-    <form-field label="Nome" v-model="me.first_name" type="text"
-                :spec="validations.me.first_name"/>
-    <form-field label="Sobrenome" v-model="me.surname" type="text"
-                :spec="validations.me.surname"/>
+  <form id="form">
     <form-field label="Email" v-model="me.email" type="email"
-                :spec="validations.me.email"/>
+                @error="e => errors.email = e"
+                :spec="validations.email"/>
+    <form-field label="Senha" v-model="me.password" type="password"
+                @error="e => errors.password = e"
+                :spec="validations.password"/>
+
+    <form-field label="Nome" v-model="me.first_name" type="text"
+                id="name"
+                @error="e => errors.first_name = e"
+                :spec="validations.first_name"/>
+    <form-field label="Sobrenome" v-model="me.surname" type="text"
+                @error="e => errors.surname = e"
+                :spec="validations.surname"/>
 
     <div class="field">
       <div class="control">
         <label class="checkbox">
-          <input type="checkbox">
+          <input type="checkbox" required>
           Marque esta caixa se você concorda com os <a href="#">termos de uso e privacidade</a>.
         </label>
       </div>
     </div>
 
     <div class="field is-grouped">
-      <div class="control">
-        <btn l="Enviar" @click="create()"/>
+      <div class="control" :title="firstError">
+        <btn l="Enviar" @click="create()" :disabled="firstError"/>
       </div>
       <div class="control">
         <btn l="Cancelar" as="text" type="reset" @click="$router.go(-1)"/>
@@ -39,12 +47,12 @@ export default {
     const nameVal = { required: null, minLength: [2] }
     return {
       me: new User({}),
+      errors: { first_name: true, surname: true, email: true, password: true },
       validations: {
-        me: {
-          first_name: nameVal,
-          surname: nameVal,
-          email: { required: null }
-        }
+        first_name: nameVal,
+        surname: nameVal,
+        email: { required: null, email: null },
+        password: { required: null, minLength: [7] }
       }
     }
   },
@@ -52,6 +60,11 @@ export default {
   create() {
     Api.me.show().then(this.setMe)
   },
+
+  computed: {
+    firstError() { return Object.values(this.errors).find(x => x) }
+  },
+
   methods: {
     create() {
       console.log(this.me)
