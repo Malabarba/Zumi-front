@@ -7,7 +7,8 @@
              :class="{ 'is-danger': hasError }"
              @input="$emit('input', $event.target.value)"
              @blur="$v.innerValue.$touch()">
-      <span class="icon is-small is-right" v-if="hasError">
+      <span v-if="hasError" class="icon is-small is-right"
+            style="color: inherit !important">
         <f-a i="exclamation-triangle"/>
       </span>
     </div>
