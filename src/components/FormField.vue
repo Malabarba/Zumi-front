@@ -3,6 +3,7 @@
     <label class="label">{{ label }}</label>
     <div class="control" :class="{ 'has-icons-right': hasError }">
       <input class="input" :type="type" v-model="innerValue"
+             :required="'required' in spec"
              :class="{ 'is-danger': hasError }"
              @input="$emit('input', $event.target.value)"
              @blur="$v.innerValue.$touch()">
@@ -11,7 +12,7 @@
       </span>
     </div>
     <p class="help is-danger">
-      <span v-if="hasError">{{ errorMessage }}</span>&nbsp;
+      <span v-if="hasError">{{ label }} {{ errorMessage }}</span>&nbsp;
     </p>
   </div>
 </template>
@@ -19,7 +20,6 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import * as validators from 'vuelidate/lib/validators'
-// import { required, minLength } from 'vuelidate/lib/validators'
 
 export default {
   mixins: [validationMixin],
@@ -34,6 +34,9 @@ export default {
     return { innerValue: this.value,
              validations: Object.keys(this.spec) }
   },
+
+  create() { this.$emit('valid', !iv.$invalid) },
+
   validations() {
     const spec = {}
     for (const k of this.validations) {
@@ -44,26 +47,25 @@ export default {
   },
 
   computed: {
-    hasError() { return this.$v.innerValue.$error },
+    hasError() {
+      const iv = this.$v.innerValue
+      this.$emit('valid', !iv.$invalid)
+      return iv.$error
+    },
+
     errorMessage() {
       const goodKeys = this.$v.innerValue
       const errorKey = this.validations.find(k => !goodKeys[k])
-      if (errorKey === 'required') 
-        return `${ this.label } não pode ficar em branco.`
-      else if (errorKey === 'minLength') 
-        return `${ this.label } deve ter ${ this.$v.innerValue.$params.minLength.min } ou mais caracteres.`
-      else if (errorKey === 'maxLength') 
-        return `${ this.label } deve ter no máximo ${ this.$v.innerValue.$params.maxLength.max } caracteres.`
+      if (!errorKey || !errorKey.length) return
+
+      const p = this.$v.innerValue.$params
+      if (errorKey === 'required') return `não pode ficar em branco.`
+      else if (errorKey === 'email') return `não é um email válido.`
+      else if (errorKey === 'minLength') return `deve ter ${p.minLength.min} ou mais caracteres.`
+      else if (errorKey === 'maxLength') return `deve ter no máximo ${p.maxLength.max} caracteres.`
+      else if (errorKey === 'minValue') return `deve ser pelo menos ${p.minValue.min}.`
+      else if (errorKey === 'maxValue') return `deve ser no máximo ${p.maxValue.max}.`
     }
-  },
-
-  methods: {
-    create() {
-      console.log(this.me)
-      // Api.me.create(this.uniq_hash).then(this.setMe)
-    },
-
-    setMe(me) { this.me = me }
   }
 }
 </script>
