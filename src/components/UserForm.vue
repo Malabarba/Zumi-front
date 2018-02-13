@@ -29,7 +29,9 @@
 
     <div class="field is-grouped">
       <div class="control" :title="firstError">
-        <btn l="Enviar" @click="create()" :disabled="firstError"/>
+        <btn l="Enviar" @click="create()"
+             :class="{ 'is-loading': !firstError && running() }"
+             :disabled="!!firstError || running()"/>
       </div>
       <div class="control">
         <btn l="Cancelar" as="text" type="reset" @click="$router.go(-1)"/>
@@ -69,6 +71,8 @@ export default {
   },
 
   methods: {
+    running: () => Api.me.pending(),
+
     create() {
       console.log(this.me)
       // Api.me.create(this.uniq_hash).then(this.setMe)
