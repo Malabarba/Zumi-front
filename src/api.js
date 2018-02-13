@@ -17,11 +17,17 @@ const patch = (path, options) => axios.patch(`${baseUrl}${path}`, options).then(
 //   .then(fn)
 
 function makeApi(model, api) {
-  const state = {}
-  api.state = state
+  api.state = {}
+  api.promises = []
+
+  const trackPromise = function (p) {
+    api.promises = api.promises.concat(p)
+    return p.finally(() => { console.log(30, api.promises, p); api.promises = api.promises.filter(x => x !== p) })
+  }
+
   const castAndCache = function(json) {
     const instance = model.from(json)
-    state[api.showPath(instance)] = instance
+    api.state[api.showPath(instance)] = instance
     return instance
   }
 
@@ -29,7 +35,7 @@ function makeApi(model, api) {
   const index = api.index
   if (index) {
     api.indexRaw = index
-    api.index = (...args) => index(...args).then(data => data[plural].map(castAndCache))
+    api.index = (...args) => trackPromise(index(...args)).then(data => data[plural].map(castAndCache))
   }
 
   const singular = model.singular
@@ -38,8 +44,10 @@ function makeApi(model, api) {
     const m = api[name]
     if (!m) break
     api[`${name}Raw`] = m
-    api[name] = (...args) => m(...args).then(x => castAndCache(x[singular]))
+    api[name] = (...args) => trackPromise(m(...args)).then(x => castAndCache(x[singular]))
   }
+
+  api.pending = () => api.promises.length > 0
 
   return api
 }
