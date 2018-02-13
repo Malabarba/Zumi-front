@@ -1,33 +1,53 @@
 <template>
-  <form id="form">
-    <form-field v-model="me.email"
+  <form id="user-form" class="columns is-multiline">
+    <form-field v-model="me.email" class="column is-6"
                 label="Email" name="email" type="email"
                 @error="e => errors.email = e"
                 :spec="validations.email"/>
-    <form-field v-model="me.password"
+    <form-field v-if="isCreate" v-model="me.password" class="column is-6"
                 label="Senha" name="password" type="password"
                 @error="e => errors.password = e"
                 :spec="validations.password"/>
+    <form-field v-else v-model="me.phone" class="column is-6"
+                placeholder="DD000000000"
+                label="Telefone de contato" name="phone" type="tel"
+                @error="e => errors.phone = e"
+                :spec="validations.phone"/>
 
-    <form-field v-model="me.first_name"
+    <form-field v-model="me.first_name" class="column is-6"
                 label="Nome" name="first_name" type="text" id="name"
                 @error="e => errors.first_name = e"
                 :spec="validations.first_name"/>
-    <form-field v-model="me.surname"
+    <form-field v-model="me.surname" class="column is-6"
                 label="Sobrenome" name="surname" type="text"
                 @error="e => errors.surname = e"
                 :spec="validations.surname"/>
 
-    <div class="field">
+    <form-field v-model="me.cpf" class="column is-6"
+                label="CPF (somente dígitos)" name="cpf" type="tel"
+                @error="e => errors.cpf = e"
+                :spec="validations.cpf"/>
+    <form-field v-model="me.birth_date" class="column is-6"
+                label="Data de Nascimento" name="birth_date" type="date"
+                @error="e => errors.birth_date = e"
+                :spec="validations.birth_date"/>
+
+    <form-field v-if="isCreate" v-model="me.phone" class="column is-6"
+                placeholder="DD000000000"
+                label="Telefone de contato" name="phone" type="tel"
+                @error="e => errors.phone = e"
+                :spec="validations.phone"/>
+
+    <div class="field column is-12">
       <div class="control">
         <label class="checkbox">
-          <input type="checkbox" required>
+          <input type="checkbox" value="1.0" v-model="me.privacy_contract_version" required>
           Marque esta caixa se você concorda com os <a href="#">termos de uso e privacidade</a>.
         </label>
       </div>
     </div>
 
-    <div class="field is-grouped">
+    <div class="field is-grouped column is-12">
       <div class="control" :title="firstError">
         <btn l="Enviar" @click="create()"
              :class="{ 'is-loading': !firstError && running() }"
@@ -41,29 +61,36 @@
 </template>
 
 <script>
-import { User } from '@/models'
+// import { User } from '@/models'
 import Api from '@/api'
 import FormField from '@/components/FormField.vue'
 
 export default {
   components: {FormField},
-  props: [],
+  props: {
+    mode: { required: true, type: String }
+  },
   data() {
+    // let inputs
+    // if () inputs = ['email', 'password', 'first_name', 'surname', 'cpf', 'birth_date', 'phone']
+    const create = this.mode === 'create'
+    // const update = this.mode === 'update'
+    // const pwd = this.mode === 'updatePassword'
     const nameVal = { required: null, minLength: [2] }
     return {
-      me: new User({}),
-      errors: { first_name: true, surname: true, email: true, password: true },
+      me: Api.me.state,
+      isCreate: create,
+      errors: { first_name: true, surname: true, email: true, password: create, phone: true, cpf: create, birth_date: true },
       validations: {
         first_name: nameVal,
         surname: nameVal,
         email: { required: null, email: null },
-        password: { required: null, minLength: [7] }
+        password: { required: null, minLength: [7] },
+        phone: { minLength: [11], maxLength: [11] },
+        cpf: { required: null, minLength: [11], maxLength: [11] },
+        birth_date: {}
       }
     }
-  },
-
-  create() {
-    Api.me.show().then(this.setMe)
   },
 
   computed: {
@@ -71,14 +98,29 @@ export default {
   },
 
   methods: {
-    running: () => Api.me.pending(),
+    running: Api.me.pending,
 
-    create() {
+    showMe() {
+      window.vform = this
+      console.log(this)
       console.log(this.me)
-      // Api.me.create(this.uniq_hash).then(this.setMe)
+      console.log(this.errors)
+      console.log(this.firstError)
     },
 
-    setMe(me) { this.me = me }
+    create() {
+      this.showMe()
+      Api.me.create(this.me)
+    }
   }
 }
 </script>
+
+<style lang="scss">
+#user-form {
+  .column {
+    margin: 0;
+    padding-top: 0;
+  }
+}
+</style>
