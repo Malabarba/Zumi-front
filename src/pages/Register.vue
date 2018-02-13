@@ -2,14 +2,18 @@
   <div>
     <section class="section container">
       <div class="columns">
-        <article class="column is-6">
-          <user-form/>
+        <article class="column is-4">
+          <p>Preenchendo este cadastro você poderá comprar e vender
+            imóveis na Zumi.</p>
+          <p>Qualquer dúvida, entre em contato conosco em
+            <a href="mailto:contato@zumi.com.br">contato@zumi.com.br</a>.</p>
         </article>
-        <article class="column is-6">
-          <p>Criando esse cadastro, você...</p>
+        <article class="column is-8">
+          <user-form mode="create"/>
         </article>
       </div>
     </section>
+
     <app-footer/>
   </div>
 </template>
@@ -24,10 +28,6 @@ export default {
   name: 'Register',
   head: buildMeta({title: 'Cadastro',
                    description: 'Crie seu cadastro de comprador ou vendedor na Zumi'}),
-  components: {UserForm},
-  props: [],
-  data() {
-    return {}
-  }
+  components: {UserForm}
 }
 </script>
