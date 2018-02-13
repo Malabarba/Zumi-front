@@ -74,7 +74,7 @@ export class User {
   }
 
   get name() {
-    return '' + first_name + ' ' + surname
+    return '' + this.first_name + ' ' + this.surname
   }
 
   constructor({favorite_listings, properties, sale_visits, buy_visits,
