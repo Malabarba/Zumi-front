@@ -22,7 +22,7 @@ function makeApi(model, api) {
 
   const trackPromise = function (p) {
     api.promises = api.promises.concat(p)
-    return p.finally(() => { console.log(30, api.promises, p); api.promises = api.promises.filter(x => x !== p) })
+    return p.finally(() => { api.promises = api.promises.filter(x => x !== p) })
   }
 
   const castAndCache = function(json) {
