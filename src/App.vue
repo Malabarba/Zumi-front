@@ -7,12 +7,14 @@
 </template>
 
 <script>
+import Api from '@/api'
 import AppHeader from './components/AppHeader.vue'
 import FullscreenGallery from './components/FullscreenGallery.vue'
 
 export default {
   name: 'App',
-  components: { AppHeader, FullscreenGallery }
+  components: { AppHeader, FullscreenGallery },
+  created() { Api.me.show() }
 }
 </script>
 

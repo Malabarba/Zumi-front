@@ -17,17 +17,17 @@ const patch = (path, options) => axios.patch(`${baseUrl}${path}`, options).then(
 //   .then(fn)
 
 function makeApi(model, api) {
-  api.state = {}
+  if (!api.state) api.state = {}
   api.promises = []
 
   const trackPromise = function (p) {
-    api.promises = api.promises.concat(p)
+    api.promises.push(p)
     return p.finally(() => { api.promises = api.promises.filter(x => x !== p) })
   }
 
   const castAndCache = function(json) {
     const instance = model.from(json)
-    api.state[api.showPath(instance)] = instance
+    api.cache(instance)
     return instance
   }
 
@@ -53,14 +53,15 @@ function makeApi(model, api) {
 }
 
 const listing = makeApi(Listing, {
-  showPath: (listing) => `/listing/${listing.uniq_hash}`,
+  cache(l) { this.state[`/listing/${l.uniq_hash}`] = l },
   index: (params) => get('/listings', { params }),
   show: (id) => get(`/listing/${id}`),
   neighborhoods: () => get('/listings/neighborhoods')
 })
 
 const me = makeApi(User, {
-  showPath: () => '/me',
+  state: new User(),
+  cache(me) { Object.assign(this.state, me) },
   show: () => get('/me'),
   create: (user) => post('/me', { user }),
   update: (user) => patch('/me', { user }),
