@@ -7,7 +7,7 @@
 <script>
 export default {
   props: {
-    as: { required: false, type: String, default: 'link' },
+    as: { required: false, type: String, default: 'primary' },
     l: { required: true, type: String },
     disabled: { required: false, type: Boolean, default: false }
   },
