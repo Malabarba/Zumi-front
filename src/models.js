@@ -73,12 +73,15 @@ export class User {
     return new User(data)
   }
 
+  get name() {
+    return '' + first_name + ' ' + surname
+  }
+
   constructor({favorite_listings, properties, sale_visits, buy_visits,
                birth_date, cpf, phone, name, surname, first_name, email}) {
     this.email = email
     this.first_name = first_name
     this.surname = surname
-    this.name = `${first_name} ${surname}`
     this.phone = phone
     this.cpf = cpf
     this.birth_date = birth_date
