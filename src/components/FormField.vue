@@ -14,7 +14,7 @@
       </span>
     </div>
     <p class="help is-danger">
-      <span v-if="hasError">{{ label }} {{ errorMessage }}</span>&nbsp;
+      <span v-if="hasError">{{ errorMessage }}</span>&nbsp;
     </p>
   </div>
 </template>
