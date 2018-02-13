@@ -24,6 +24,7 @@
                 :spec="validations.surname"/>
 
     <form-field v-model="me.cpf" class="column is-6"
+                :disabled="!isCreate"
                 label="CPF (somente dígitos)" name="cpf" type="tel"
                 @error="e => errors.cpf = e"
                 :spec="validations.cpf"/>
@@ -49,7 +50,7 @@
 
     <div class="field is-grouped column is-12">
       <div class="control" :title="firstError">
-        <btn l="Enviar" @click="create()"
+        <btn l="Enviar" @click="submit()"
              :class="{ 'is-loading': !firstError && running() }"
              :disabled="!!firstError || running()"/>
       </div>
@@ -71,19 +72,14 @@ export default {
     mode: { required: true, type: String }
   },
   data() {
-    // let inputs
-    // if () inputs = ['email', 'password', 'first_name', 'surname', 'cpf', 'birth_date', 'phone']
     const create = this.mode === 'create'
-    // const update = this.mode === 'update'
-    // const pwd = this.mode === 'updatePassword'
-    const nameVal = { required: null, minLength: [2] }
     return {
       me: Api.me.state,
       isCreate: create,
       errors: { first_name: true, surname: true, email: true, password: create, phone: true, cpf: create, birth_date: true },
       validations: {
-        first_name: nameVal,
-        surname: nameVal,
+        first_name: { required: null, minLength: [2] },
+        surname: { required: null, minLength: [2] },
         email: { required: null, email: null },
         password: { required: null, minLength: [7] },
         phone: { minLength: [11], maxLength: [11] },
@@ -108,9 +104,10 @@ export default {
       console.log(this.firstError)
     },
 
-    create() {
+    submit() {
       this.showMe()
-      Api.me.create(this.me)
+      if (this.isCreate) Api.me.create(this.me)
+      else Api.me.update(this.me)
     }
   }
 }
