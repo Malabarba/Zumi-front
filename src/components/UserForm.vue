@@ -50,7 +50,7 @@
 
     <div class="field is-grouped column is-12">
       <div class="control" :title="firstError">
-        <btn l="Enviar" @click="submit()"
+        <btn :l="isCreate ? 'Enviar' : 'Salvar'" @click="submit()"
              :class="{ 'is-loading': !firstError && running() }"
              :disabled="!!firstError || running()"/>
       </div>
