@@ -2,7 +2,8 @@
   <div class="field">
     <label class="label">{{ label }}</label>
     <div class="control" :class="{ 'has-icons-right': hasError }">
-      <input class="input" :type="type" v-model="innerValue"
+      <input class="input" :type="type" :name="name"
+             v-model="innerValue"
              :required="'required' in spec"
              :class="{ 'is-danger': hasError }"
              @input="$emit('input', $event.target.value)"
@@ -28,6 +29,7 @@ export default {
     spec: {type: Object, required: true},
     value: {type: [Number, String, Date]},
     type: {type: String, required: true},
+    name: {type: String, required: false},
     label: {type: String, required: true}
   },
 
