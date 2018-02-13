@@ -9,7 +9,7 @@ export default {
   props: {
     as: { required: false, type: String, default: 'link' },
     l: { required: true, type: String },
-    disabled: { required: false, type: Boolean, default: false },
+    disabled: { required: false, type: Boolean, default: false }
   },
 
   computed: {
