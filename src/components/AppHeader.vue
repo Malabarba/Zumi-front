@@ -24,7 +24,10 @@
           <router-link class="navbar-item" to="/venda-seu-imovel" exact>Vender Imóvel</router-link>
         </div>
 
-        <div class="navbar-end">
+        <div v-if="me.first_name" class="navbar-end">
+          <router-link class="navbar-item" :to="{ name: 'UpdateMe' }" exact>{{me.first_name}}</router-link>
+        </div>
+        <div v-else class="navbar-end">
           <router-link class="navbar-item" to="/login" exact>Login</router-link>
           <router-link class="navbar-item" to="/cadastro" exact>Cadastro</router-link>
         </div>
@@ -33,7 +36,13 @@
   </nav>
 </template>
 
-<script>export default {}</script>
+<script>
+import Api from '@/api'
+
+export default {
+  data() { return { me: Api.me.state } }
+}
+</script>
 
 <style lang="scss">
 @import '../assets/_variables.scss';

@@ -17,7 +17,7 @@ export default new Router({
     {path: '/', name: 'Home', component: Home},
     {path: '/cadastro', name: 'Register', component: Register},
     {path: '/meu-cadastro', name: 'UpdateMe', component: UpdateMe},
-    {path: '/troca-de-senha', name: 'UpdateMe', component: UpdateMe},
+    {path: '/troca-de-senha', name: 'UpdatePassword', component: UpdateMe},
     {path: '/como-funciona', name: 'HowItWorks', component: HowItWorks},
     {path: '/imoveis', props: {hasMap: false}, name: 'ListingIndex', component: ListingIndex},
     {path: '/imoveis-no-mapa', props: {hasMap: true}, name: 'ListingMap', component: ListingIndex},
