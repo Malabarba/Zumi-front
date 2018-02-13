@@ -1,17 +1,20 @@
 <template>
   <form id="form">
-    <form-field label="Email" v-model="me.email" type="email"
+    <form-field v-model="me.email"
+                label="Email" name="email" type="email"
                 @error="e => errors.email = e"
                 :spec="validations.email"/>
-    <form-field label="Senha" v-model="me.password" type="password"
+    <form-field v-model="me.password"
+                label="Senha" name="password" type="password"
                 @error="e => errors.password = e"
                 :spec="validations.password"/>
 
-    <form-field label="Nome" v-model="me.first_name" type="text"
-                id="name"
+    <form-field v-model="me.first_name"
+                label="Nome" name="first_name" type="text" id="name"
                 @error="e => errors.first_name = e"
                 :spec="validations.first_name"/>
-    <form-field label="Sobrenome" v-model="me.surname" type="text"
+    <form-field v-model="me.surname"
+                label="Sobrenome" name="surname" type="text"
                 @error="e => errors.surname = e"
                 :spec="validations.surname"/>
 
