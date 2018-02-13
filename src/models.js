@@ -7,7 +7,7 @@ export class Property {
 
   constructor({uniq_hash, address, photos, type, type_text,
                toilet_count, bath_count, bedroom_count,
-               lot_size_m2, usable_size_m2, condo_cost_cents, floor}) {
+               lot_size_m2, usable_size_m2, condo_cost_cents, floor} = {}) {
     this.uniq_hash = uniq_hash
     this.address = address
     this.photos = photos // .map(p => new Photo(p))
@@ -51,7 +51,7 @@ export class Listing {
     return new Listing(data)
   }
 
-  constructor({uniq_hash, property, price_cents, furnished, published_at, deleted_at}) {
+  constructor({uniq_hash, property, price_cents, furnished, published_at, deleted_at} = {}) {
     this.uniq_hash = uniq_hash
     this.property = new Property(property)
     this.price_cents = price_cents
@@ -78,13 +78,15 @@ export class User {
   }
 
   constructor({favorite_listings, properties, sale_visits, buy_visits,
-               birth_date, cpf, phone, name, surname, first_name, email}) {
+               privacy_contract_version,
+               birth_date, cpf, phone, name, surname, first_name, email} = {}) {
     this.email = email
     this.first_name = first_name
     this.surname = surname
     this.phone = phone
     this.cpf = cpf
     this.birth_date = birth_date
+    this.privacy_contract_version = privacy_contract_version
     this.buy_visits = buy_visits
     this.sale_visits = sale_visits
     this.properties = properties && properties.map(Property.from)
