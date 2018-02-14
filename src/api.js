@@ -9,6 +9,7 @@ function logIt(x) {
 }
 
 const get = (path, options) => axios.get(`${baseUrl}${path}`, options).then(logIt).then(x => x.data)
+const del = (path, options) => axios.delete(`${baseUrl}${path}`, options).then(logIt)
 const post = (path, options) => axios.post(`${baseUrl}${path}`, options).then(logIt).then(x => x && x.data)
 const patch = (path, options) => axios.patch(`${baseUrl}${path}`, options).then(logIt).then(x => x && x.data)
 
@@ -26,7 +27,7 @@ function makeApi(model, api) {
   }
 
   const castAndCache = function(json) {
-    const instance = model.from(json)
+    const instance = model.from(json || {})
     api.cache(instance)
     return instance
   }
@@ -65,7 +66,11 @@ const me = makeApi(User, {
   show: () => get('/me'),
   create: (user) => post('/me', { user }),
   update: (user) => patch('/me', { user }),
-  updatePassword: (user) => patch('/me/update_password', { user })
+  updatePassword: (user) => patch('/me/update_password', { user }),
+  login: (user) => post('/sessions', { user }),
+  logout(user) {
+    del('/sessions', { user }).then(() => this.cache(new User()))
+  }
 })
 
 export default { listing, me }

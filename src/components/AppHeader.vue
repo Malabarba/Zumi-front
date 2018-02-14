@@ -26,6 +26,7 @@
 
         <div v-if="me.first_name" class="navbar-end">
           <router-link class="navbar-item" :to="{ name: 'UpdateMe' }" exact>{{me.first_name}}</router-link>
+          <a class="navbar-item" href="/sair" @click.prevent="logout()" append>Sair</a>
         </div>
         <div v-else class="navbar-end">
           <router-link class="navbar-item" to="/login" exact>Login</router-link>
@@ -40,7 +41,10 @@
 import Api from '@/api'
 
 export default {
-  data() { return { me: Api.me.state } }
+  data() { return { me: Api.me.state } },
+  methods: {
+    logout() { Api.me.logout().then(() => this.$router.push(this.$route)) }
+  }
 }
 </script>
 
