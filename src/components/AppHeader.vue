@@ -43,7 +43,7 @@ import Api from '@/api'
 export default {
   data() { return { me: Api.me.state } },
   methods: {
-    logout() { Api.me.logout().then(() => this.$router.push(this.$route)) }
+    logout() { Api.me.logout().then(() => window.location = '/') }
   }
 }
 </script>
