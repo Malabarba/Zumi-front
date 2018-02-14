@@ -13,7 +13,6 @@ import ImageGallery, { fullscreenGalleryData } from './ImageGallery'
 export default {
   components: {ImageGallery},
   data() { return fullscreenGalleryData }
-  // private sub = fullscreenGallery.subscribe(e => this.input = e);
 }
 </script>
 
