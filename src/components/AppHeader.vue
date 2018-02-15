@@ -25,7 +25,9 @@
         </div>
 
         <div v-if="me.first_name" class="navbar-end">
-          <router-link class="navbar-item" :to="{ name: 'UpdateMe' }" exact>{{me.first_name}}</router-link>
+          <router-link class="navbar-item" :to="{ name: 'UpdateMe' }" exact>
+            <strong>{{me.first_name}}</strong>
+          </router-link>
           <a class="navbar-item" href="#sair" @click.prevent="logout" append>Sair</a>
         </div>
         <div v-else class="navbar-end">
