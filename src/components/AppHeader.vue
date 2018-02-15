@@ -26,10 +26,10 @@
 
         <div v-if="me.first_name" class="navbar-end">
           <router-link class="navbar-item" :to="{ name: 'UpdateMe' }" exact>{{me.first_name}}</router-link>
-          <a class="navbar-item" href="/sair" @click.prevent="logout()" append>Sair</a>
+          <a class="navbar-item" href="#sair" @click.prevent="logout" append>Sair</a>
         </div>
         <div v-else class="navbar-end">
-          <router-link class="navbar-item" to="/login" exact>Login</router-link>
+          <a class="navbar-item" href="#login" @click.prevent="openLogin">Login</a>
           <router-link class="navbar-item" to="/cadastro" exact>Cadastro</router-link>
         </div>
       </div>
@@ -39,11 +39,13 @@
 
 <script>
 import Api from '@/api'
+import EventBus from '@/event-bus'
 
 export default {
   data() { return { me: Api.me.state } },
   methods: {
-    logout() { Api.me.logout().then(() => window.location = '/') }
+    logout() { Api.me.logout().then(() => window.location = '/') },
+    openLogin() { EventBus.$emit('login-modal') }
   }
 }
 </script>

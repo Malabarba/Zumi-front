@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <login-modal/>
     <fullscreen-gallery/>
     <app-header/>
     <router-view/>
@@ -10,10 +11,10 @@
 import Api from '@/api'
 import AppHeader from './components/AppHeader.vue'
 import FullscreenGallery from './components/FullscreenGallery.vue'
+import LoginModal from './components/LoginModal.vue'
 
 export default {
-  name: 'App',
-  components: { AppHeader, FullscreenGallery },
+  components: { AppHeader, FullscreenGallery, LoginModal },
   created() { Api.me.show() }
 }
 </script>

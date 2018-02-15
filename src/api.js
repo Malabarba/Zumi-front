@@ -40,7 +40,7 @@ function makeApi(model, api) {
   }
 
   const singular = model.singular
-  const methods = ['show', 'create', 'update']
+  const methods = ['show', 'create', 'update', 'login']
   for (var name of methods) {
     const m = api[name]
     if (!m) break
