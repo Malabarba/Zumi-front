@@ -3,41 +3,41 @@
     <form-field v-model="me.email" class="column is-6"
                 label="Email" name="email" type="email"
                 @error="e => errors.email = e"
-                :spec="validations.email"/>
+                :spec="{ required: null, email: null }"/>
     <form-field v-if="isCreate" v-model="me.password" class="column is-6"
                 label="Senha" name="password" type="password"
                 @error="e => errors.password = e"
-                :spec="validations.password"/>
+                :spec="{ required: null, minLength: [7] }"/>
     <form-field v-else v-model="me.phone" class="column is-6"
                 placeholder="DD000000000"
                 label="Telefone de contato" name="phone" type="tel"
                 @error="e => errors.phone = e"
-                :spec="validations.phone"/>
+                :spec="{ minLength: [11], maxLength: [11] }"/>
 
     <form-field v-model="me.first_name" class="column is-6"
                 label="Nome" name="first_name" type="text" id="name"
                 @error="e => errors.first_name = e"
-                :spec="validations.first_name"/>
+                :spec="{ required: null, minLength: [2] }"/>
     <form-field v-model="me.surname" class="column is-6"
                 label="Sobrenome" name="surname" type="text"
                 @error="e => errors.surname = e"
-                :spec="validations.surname"/>
+                :spec="{ required: null, minLength: [2] }"/>
 
     <form-field v-model="me.cpf" class="column is-6"
                 :disabled="!isCreate"
                 label="CPF (somente dígitos)" name="cpf" type="tel"
                 @error="e => errors.cpf = e"
-                :spec="validations.cpf"/>
+                :spec="{ required: null, minLength: [11], maxLength: [11] }"/>
     <form-field v-model="me.birth_date" class="column is-6"
                 label="Data de Nascimento" name="birth_date" type="date"
                 @error="e => errors.birth_date = e"
-                :spec="validations.birth_date"/>
+                :spec="{}"/>
 
     <form-field v-if="isCreate" v-model="me.phone" class="column is-6"
                 placeholder="DD000000000"
                 label="Telefone de contato" name="phone" type="tel"
                 @error="e => errors.phone = e"
-                :spec="validations.phone"/>
+                :spec="{ minLength: [11], maxLength: [11] }"/>
 
     <div class="field column is-12">
       <div class="control">
@@ -76,16 +76,7 @@ export default {
     return {
       me: Api.me.state,
       isCreate: create,
-      errors: { first_name: true, surname: true, email: true, password: create, phone: true, cpf: create, birth_date: true },
-      validations: {
-        first_name: { required: null, minLength: [2] },
-        surname: { required: null, minLength: [2] },
-        email: { required: null, email: null },
-        password: { required: null, minLength: [7] },
-        phone: { minLength: [11], maxLength: [11] },
-        cpf: { required: null, minLength: [11], maxLength: [11] },
-        birth_date: {}
-      }
+      errors: { first_name: true, surname: true, email: true, password: create, phone: true, cpf: create, birth_date: true, privacy_contract: true }
     }
   },
 
