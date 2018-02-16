@@ -17,7 +17,8 @@
                     :spec="validations.password"/>
       </section>
       <footer class="modal-card-foot">
-        <btn as="secondary" l="Enviar" @click="submit"/>
+        <btn l="Enviar" @click="submit" :disabled="running()"
+             :class="{ 'is-loading': running() }"/>
         <btn as="text" l="Cancelar" @click="close" aria-label="close"/>
       </footer>
     </form>
@@ -44,6 +45,7 @@ export default {
   },
   created() { EventBus.$on('login-modal', this.open) },
   methods: {
+    running: Api.me.pending,
     close() { this.active = false },
     open() { this.active = true },
     submit() { Api.me.login(this.me).then(this.close) }
