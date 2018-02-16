@@ -42,7 +42,7 @@
     <div class="field column is-12">
       <div class="control">
         <label class="checkbox">
-          <input type="checkbox" value="1.0" v-model="me.privacy_contract_version" required>
+          <input type="checkbox" value="1.0" v-model="me.privacy_contract" required>
           Marque esta caixa se você concorda com os <a href="#">termos de uso e privacidade</a>.
         </label>
       </div>
@@ -50,9 +50,9 @@
 
     <div class="field is-grouped column is-12">
       <div class="control" :title="firstError">
-        <btn :l="isCreate ? 'Enviar' : 'Salvar'" @click="submit()"
+        <btn :l="isCreate ? 'Enviar' : 'Salvar'" @click="submit"
              :class="{ 'is-loading': !firstError && running() }"
-             :disabled="!!firstError || running()"/>
+             :disabled="!me.privacy_contract || !!firstError || running()"/>
       </div>
       <div class="control">
         <btn l="Cancelar" as="text" type="reset" @click="$router.go(-1)"/>
@@ -76,12 +76,15 @@ export default {
     return {
       me: Api.me.state,
       isCreate: create,
-      errors: { first_name: true, surname: true, email: true, password: create, phone: true, cpf: create, birth_date: true, privacy_contract: true }
+      errors: { first_name: true, surname: true, email: true, password: create, phone: true, cpf: create, birth_date: true }
     }
   },
 
   computed: {
-    firstError() { return Object.values(this.errors).find(x => x) }
+    firstError() {
+      return Object.values(this.errors).find(x => x) ||
+             (!this.me.privacy_contract ? 'É necessário aceitar os termos.' : null)
+    }
   },
 
   methods: {
@@ -97,6 +100,7 @@ export default {
 
     submit() {
       this.showMe()
+      if (this.firstError) return false
       if (this.isCreate) Api.me.create(this.me)
       else Api.me.update(this.me)
     }
