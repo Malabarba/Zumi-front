@@ -24,6 +24,10 @@ export default {
 @import 'assets/_variables.scss';
 @import "~bulma/bulma";
 
+.button.is-primary:hover, .button.is-primary.is-hovered {
+  background-color: #292929;
+}
+
 .si-content {
   width: 400px;
   max-width: calc(90vw) !important;
