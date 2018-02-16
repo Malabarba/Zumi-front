@@ -1,5 +1,6 @@
 <template>
-  <form id="user-form" class="columns is-multiline">
+  <form id="user-form" class="columns is-multiline"
+        @keyup.enter.exact="submit">
     <form-field v-model="me.email" class="column is-6"
                 label="Email" name="email" type="email"
                 @error="e => errors.email = e"

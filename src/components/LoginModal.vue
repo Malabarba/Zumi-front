@@ -2,27 +2,25 @@
   <div v-if="active" id="LoginForm"
        class="modal" style="display: initial">
     <div class="modal-background" @click="close"></div>
-    <div class="modal-card">
+    <form class="modal-card" @keyup.enter="submit">
       <header class="modal-card-head">
         <p class="modal-card-title">Login</p>
       </header>
       <section class="modal-card-body">
-        <form>
-          <form-field v-model="me.email"
-                      label="Email" name="email" type="email"
-                      @error="e => errors.email = e"
-                      :spec="validations.email"/>
-          <form-field v-model="me.password"
-                      label="Senha" name="password" type="password"
-                      @error="e => errors.password = e"
-                      :spec="validations.password"/>
-        </form>
+        <form-field v-model="me.email"
+                    label="Email" name="email" type="email"
+                    @error="e => errors.email = e"
+                    :spec="validations.email"/>
+        <form-field v-model="me.password"
+                    label="Senha" name="password" type="password"
+                    @error="e => errors.password = e"
+                    :spec="validations.password"/>
       </section>
       <footer class="modal-card-foot">
         <btn as="secondary" l="Enviar" @click="submit"/>
         <btn as="text" l="Cancelar" @click="close" aria-label="close"/>
       </footer>
-    </div>
+    </form>
   </div>
 </template>
 
