@@ -7,7 +7,7 @@ scripts="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 #################
 # Build to dist #
-npm run ng -- build -prod aot=true
+npm run node -- build/build.js
 
 cd dist
 cp index.html 404.html
