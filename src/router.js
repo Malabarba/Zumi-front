@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueHead from 'vue-head'
 import Router from 'vue-router'
-import { me } from '@/api'
+import Api from '@/api'
 
 import Home from '@/pages/Home'
 import HowItWorks from '@/pages/HowItWorks'
@@ -13,6 +13,7 @@ import UpdateMe from '@/pages/UpdateMe'
 Vue.use(VueHead)
 Vue.use(Router)
 
+const me = Api.me
 const logged = { beforeEnter: (_, _2, next) => { me.queue(() => me.state.email ? next() : next('/')) } }
 const notLogged = { beforeEnter: (_, _2, next) => { me.queue(() => !me.state.email ? next() : next('/')) } }
 

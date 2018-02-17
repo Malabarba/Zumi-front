@@ -1,9 +1,12 @@
 import Vue from 'vue'
+import Api from './api'
 import App from './App'
 import router from './router.js'
 import AppIcon from './components/AppIcon'
 import AppFooter from './components/AppFooter'
 import Btn from './components/Btn'
+
+Api.me.show()
 
 Vue.config.productionTip = false
 

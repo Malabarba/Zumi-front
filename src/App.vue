@@ -8,14 +8,12 @@
 </template>
 
 <script>
-import Api from '@/api'
-import AppHeader from './components/AppHeader.vue'
-import FullscreenGallery from './components/FullscreenGallery.vue'
-import LoginModal from './components/LoginModal.vue'
+import AppHeader from '@/components/AppHeader.vue'
+import FullscreenGallery from '@/components/FullscreenGallery.vue'
+import LoginModal from '@/components/LoginModal.vue'
 
 export default {
   components: { AppHeader, FullscreenGallery, LoginModal },
-  created() { Api.me.show() }
 }
 </script>
 
