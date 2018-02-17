@@ -1,5 +1,6 @@
 <template>
   <div v-if="active" id="LoginForm"
+       @keyup.escape.exact="close"
        class="modal" style="display: initial">
     <div class="modal-background" @click="close"></div>
     <formed class="modal-card" @submit="submit">
