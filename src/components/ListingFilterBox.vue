@@ -68,7 +68,7 @@
 
       <div class="is-flex-mobile column field">
         <div class="control">
-          <router-link class="button is-secondary" :to="{path: '/imoveis', query: q}">Buscar</router-link>
+          <router-link class="button is-primary" :to="{path: '/imoveis', query: q}">Buscar</router-link>
         </div>
       </div>
 
