@@ -71,7 +71,7 @@ import Formed from '@/components/Formed'
 import EventBus from '@/event-bus'
 
 export default {
-  components: {FormField, Formed},
+  components: {FormField, Formed, Api.me.mixin},
   props: {
     mode: { required: true, type: String }
   },
@@ -79,13 +79,10 @@ export default {
     const create = this.mode === 'create'
     return {
       me: {...Api.me.state},
-      running: Api.me.pending(),
       isCreate: create,
       errors: { first_name: true, surname: true, email: true, password: create, phone: true, cpf: create, birth_date: true }
     }
   },
-
-  created() { EventBus.$on('api-me-state', (state) => this.running = state) },
 
   computed: {
     firstError() {

@@ -32,7 +32,7 @@ import FormField from '@/components/FormField.vue'
 import Formed from '@/components/Formed'
 
 export default {
-  components: {Formed, FormField},
+  components: {Formed, FormField, Api.me.mixin},
   data() {
     return {
       active: false,
@@ -44,13 +44,9 @@ export default {
       }
     }
   },
-  created() {
-    EventBus.$on('login-modal', this.open)
-    EventBus.$on('api-me-state', (state) => this.running = state)
-  },
+  created() { EventBus.$on('login-modal', this.open) },
 
   methods: {
-    running: Api.me.pending,
     close() { this.active = false },
     open() { this.active = true },
     submit() {

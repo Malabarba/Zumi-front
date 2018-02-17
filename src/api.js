@@ -21,13 +21,14 @@ const patch = (path, options) => axios.patch(`${baseUrl}${path}`, options).then(
 function makeApi(model, api) {
   if (!api.state) api.state = {}
   api.promises = []
+  const eventKey = `api-${api.singular}-state`
 
   const trackPromise = function (p) {
     api.promises.push(p)
-    EventBus.$emit('api-me-state', api.pending())
+    EventBus.$emit(eventKey, api.pending())
     return p.finally(() => {
       api.promises = api.promises.filter(x => x !== p)
-      EventBus.$emit('api-me-state', api.pending())
+      EventBus.$emit(eventKey, api.pending())
     })
   }
 
@@ -59,17 +60,22 @@ function makeApi(model, api) {
     else fn()
   }
 
+  api.mixin = {
+    data() { return { running: api.pending() } },
+    created() { EventBus.$on(eventKey, (state) => this.running = state) }
+  }
+
   return api
 }
 
-const listing = makeApi(Listing, {
+export const listing = makeApi(Listing, {
   cache(l) { this.state[`/listing/${l.uniq_hash}`] = l },
   index: (params) => get('/listings', { params }),
   show: (id) => get(`/listing/${id}`),
   neighborhoods: () => get('/listings/neighborhoods')
 })
 
-const me = makeApi(User, {
+export const me = makeApi(User, {
   state: new User(),
   cache(me) { Object.assign(this.state, me) },
   show: () => get('/me'),
