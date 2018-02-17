@@ -49,6 +49,10 @@ function makeApi(model, api) {
   }
 
   api.pending = () => api.promises.length > 0
+  api.queue = function(fn) {
+    if (api.pending()) api.promises[api.promises.length - 1].finally(fn)
+    else fn()
+  }
 
   return api
 }
