@@ -71,7 +71,8 @@ import Formed from '@/components/Formed'
 import EventBus from '@/event-bus'
 
 export default {
-  components: {FormField, Formed, Api.me.mixin},
+  components: {FormField, Formed},
+  mixin: [Api.me.mixin],
   props: {
     mode: { required: true, type: String }
   },

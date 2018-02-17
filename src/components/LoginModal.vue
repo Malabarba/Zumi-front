@@ -32,7 +32,8 @@ import FormField from '@/components/FormField.vue'
 import Formed from '@/components/Formed'
 
 export default {
-  components: {Formed, FormField, Api.me.mixin},
+  components: {Formed, FormField},
+  mixin: [Api.me.mixin],
   data() {
     return {
       active: false,
