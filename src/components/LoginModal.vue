@@ -2,7 +2,7 @@
   <div v-if="active" id="LoginForm"
        class="modal" style="display: initial">
     <div class="modal-background" @click="close"></div>
-    <form class="modal-card" @submit.prevent="submit">
+    <formed class="modal-card" @submit="submit">
       <header class="modal-card-head">
         <p class="modal-card-title">Login</p>
       </header>
@@ -21,7 +21,7 @@
              :class="{ 'is-loading': running() }"/>
         <btn as="text" l="Cancelar" @click="close" aria-label="close"/>
       </footer>
-    </form>
+    </formed>
   </div>
 </template>
 
@@ -29,9 +29,10 @@
 import Api from '@/api'
 import EventBus from '@/event-bus'
 import FormField from '@/components/FormField.vue'
+import Formed from '@/components/Formed'
 
 export default {
-  components: {FormField},
+  components: {Formed, FormField},
   data() {
     return {
       active: false,
@@ -44,11 +45,14 @@ export default {
     }
   },
   created() { EventBus.$on('login-modal', this.open) },
+
   methods: {
     running: Api.me.pending,
     close() { this.active = false },
     open() { this.active = true },
-    submit() { Api.me.login(this.me).then(this.close) }
+    submit() {
+      Api.me.login(this.me).then(this.close)
+    }
   }
 }
 </script>

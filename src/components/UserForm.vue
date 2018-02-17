@@ -1,6 +1,5 @@
 <template>
-  <form id="UserForm" class="columns is-multiline"
-        @submit.prevent="submit">
+  <formed id="UserForm" class="columns is-multiline" @submit="submit">
     <form-field v-model="me.email" class="column is-6"
                 label="Email" name="email" type="email"
                 @error="e => errors.email = e"
@@ -61,16 +60,17 @@
         <btn l="Cancelar" as="text" type="reset" @click="$router.go(-1)"/>
       </div>
     </div>
-  </form>
+  </formed>
 </template>
 
 <script>
 // import { User } from '@/models'
 import Api from '@/api'
 import FormField from '@/components/FormField.vue'
+import Formed from '@/components/Formed'
 
 export default {
-  components: {FormField},
+  components: {FormField, Formed},
   props: {
     mode: { required: true, type: String }
   },
