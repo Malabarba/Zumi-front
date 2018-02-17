@@ -2,7 +2,7 @@
   <div v-if="active" id="LoginForm"
        class="modal" style="display: initial">
     <div class="modal-background" @click="close"></div>
-    <form class="modal-card" @keyup.enter="submit">
+    <form class="modal-card" @submit.prevent="submit">
       <header class="modal-card-head">
         <p class="modal-card-title">Login</p>
       </header>
@@ -17,7 +17,7 @@
                     :spec="validations.password"/>
       </section>
       <footer class="modal-card-foot">
-        <btn l="Enviar" @click="submit" :disabled="running()"
+        <btn ref="submit" l="Enviar" type="submit" :disabled="running()"
              :class="{ 'is-loading': running() }"/>
         <btn as="text" l="Cancelar" @click="close" aria-label="close"/>
       </footer>

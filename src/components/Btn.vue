@@ -1,7 +1,7 @@
 <template>
   <button type="button" class="button" :class="classBinding"
-          :disabled="disabled"
-          @click.prevent="$emit('click', $event)">{{l}}</button>
+          @click="$emit('click', $event)"
+          :disabled="disabled">{{l}}</button>
 </template>
 
 <script>

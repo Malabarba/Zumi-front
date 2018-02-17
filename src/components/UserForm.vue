@@ -1,6 +1,6 @@
 <template>
-  <form id="user-form" class="columns is-multiline"
-        @keyup.enter.exact="submit">
+  <form id="UserForm" class="columns is-multiline"
+        @submit.prevent="submit">
     <form-field v-model="me.email" class="column is-6"
                 label="Email" name="email" type="email"
                 @error="e => errors.email = e"
@@ -51,7 +51,7 @@
 
     <div class="field is-grouped column is-12">
       <div class="control" :title="firstError">
-        <btn :l="isCreate ? 'Enviar' : 'Salvar'" @click="submit"
+        <btn :l="isCreate ? 'Enviar' : 'Salvar'" type="submit"
              :class="{ 'is-loading': !firstError && running() }"
              :disabled="!me.privacy_contract || !!firstError || running()"/>
       </div>
@@ -110,7 +110,7 @@ export default {
 </script>
 
 <style lang="scss">
-#user-form {
+#UserForm {
   .column {
     margin: 0;
     padding-top: 0;
