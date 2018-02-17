@@ -43,8 +43,10 @@
     <div class="field column is-12">
       <div class="control">
         <label class="checkbox">
-          <input type="checkbox" value="1.0" v-model="me.privacy_contract" required>
-          Marque esta caixa se você concorda com os <a href="#">termos de uso e privacidade</a>.
+          <input v-model="me.privacy_contract" type="checkbox"
+                 true-value="1.0" required>
+          Marque esta caixa se você concorda com os
+          <a href="#">termos de uso e privacidade</a>.
         </label>
       </div>
     </div>
