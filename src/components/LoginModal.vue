@@ -17,8 +17,8 @@
                     :spec="validations.password"/>
       </section>
       <footer class="modal-card-foot">
-        <btn ref="submit" l="Enviar" type="submit" :disabled="running()"
-             :class="{ 'is-loading': running() }"/>
+        <btn ref="submit" l="Enviar" type="submit" :disabled="running"
+             :class="{ 'is-loading': running }"/>
         <btn as="text" l="Cancelar" @click="close" aria-label="close"/>
       </footer>
     </formed>
