@@ -68,7 +68,6 @@
 import Api from '@/api'
 import FormField from '@/components/FormField.vue'
 import Formed from '@/components/Formed'
-import EventBus from '@/event-bus'
 
 export default {
   components: {FormField, Formed},
