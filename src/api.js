@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { Listing, User } from '@/models'
+import EventBus from '@/event-bus'
 
 const baseUrl = '/api/v1'
 
@@ -23,7 +24,11 @@ function makeApi(model, api) {
 
   const trackPromise = function (p) {
     api.promises.push(p)
-    return p.finally(() => { api.promises = api.promises.filter(x => x !== p) })
+    EventBus.$emit('api-me-state', api.pending())
+    return p.finally(() => {
+      api.promises = api.promises.filter(x => x !== p)
+      EventBus.$emit('api-me-state', api.pending())
+    })
   }
 
   const castAndCache = function(json) {

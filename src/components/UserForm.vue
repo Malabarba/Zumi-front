@@ -53,8 +53,8 @@
     <div class="field is-grouped column is-12">
       <div class="control" :title="firstError">
         <btn :l="isCreate ? 'Enviar' : 'Salvar'" type="submit"
-             :class="{ 'is-loading': !firstError && running() }"
-             :disabled="!me.privacy_contract || !!firstError || running()"/>
+             :class="{ 'is-loading': running }"
+             :disabled="!me.privacy_contract || !!firstError || running"/>
       </div>
       <div class="control">
         <btn l="Cancelar" as="text" type="reset" @click="$router.go(-1)"/>
@@ -68,6 +68,7 @@
 import Api from '@/api'
 import FormField from '@/components/FormField.vue'
 import Formed from '@/components/Formed'
+import EventBus from '@/event-bus'
 
 export default {
   components: {FormField, Formed},
@@ -77,11 +78,14 @@ export default {
   data() {
     const create = this.mode === 'create'
     return {
-      me: Api.me.state,
+      me: {...Api.me.state},
+      running: Api.me.pending(),
       isCreate: create,
       errors: { first_name: true, surname: true, email: true, password: create, phone: true, cpf: create, birth_date: true }
     }
   },
+
+  created() { EventBus.$on('api-me-state', (state) => this.running = state) },
 
   computed: {
     firstError() {
@@ -91,8 +95,6 @@ export default {
   },
 
   methods: {
-    running: Api.me.pending,
-
     showMe() {
       window.vform = this
       console.log(this)

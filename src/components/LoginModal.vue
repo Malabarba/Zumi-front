@@ -44,7 +44,10 @@ export default {
       }
     }
   },
-  created() { EventBus.$on('login-modal', this.open) },
+  created() {
+    EventBus.$on('login-modal', this.open)
+    EventBus.$on('api-me-state', (state) => this.running = state)
+  },
 
   methods: {
     running: Api.me.pending,
