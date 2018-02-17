@@ -7,12 +7,12 @@
         <p class="modal-card-title">Login</p>
       </header>
       <section class="modal-card-body">
-        <form-field v-model="me.email"
-                    label="Email" name="email" type="email"
+        <form-field label="Email" v-model="me.email"
+                    name="email" type="email"
                     @error="e => errors.email = e"
                     :spec="validations.email"/>
-        <form-field v-model="me.password"
-                    label="Senha" name="password" type="password"
+        <form-field label="Senha" v-model="me.password"
+                    name="password" type="password"
                     @error="e => errors.password = e"
                     :spec="validations.password"/>
       </section>
