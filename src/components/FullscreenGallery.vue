@@ -1,6 +1,6 @@
 <template>
   <div v-if="input" id="FullscreenGallery" class="root is-overlay"
-       @keyup.escape.exact="close">
+       @keyup.esc.exact="close">
     <a class="delete" @click="close"></a>
     <image-gallery :images="input.images" :height="550"
                    :canFullscreen="false" :thumbnails="true"
