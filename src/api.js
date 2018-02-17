@@ -69,7 +69,8 @@ function makeApi(model, api) {
 }
 
 export const listing = makeApi(Listing, {
-  cache(l) { this.state[`/listing/${l.uniq_hash}`] = l },
+  // cache(l) { this.state[`/listing/${l.uniq_hash}`] = l },
+  cache() {},
   index: (params) => get('/listings', { params }),
   show: (id) => get(`/listing/${id}`),
   neighborhoods: () => get('/listings/neighborhoods')
@@ -83,8 +84,8 @@ export const me = makeApi(User, {
   update: (user) => patch('/me', { user }),
   updatePassword: (user) => patch('/me/update_password', { user }),
   login: (user) => post('/sessions', { user }),
-  logout(user) {
-    del('/sessions', { user }).then(() => this.cache(new User()))
+  logout() {
+    return del('/sessions').then(() => this.cache(new User()))
   }
 })
 
