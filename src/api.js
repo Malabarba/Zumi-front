@@ -47,7 +47,7 @@ function makeApi(model, api) {
   const index = api.index
   if (index) {
     api.indexRaw = index
-    api.index = (...args) => trackPromise(index(...args)).then(data => data[plural].map(castAndCache))
+    api.index = (...args) => trackPromise(index(...args).then(data => data[plural].map(castAndCache)))
   }
 
   const singular = model.singular
@@ -56,7 +56,7 @@ function makeApi(model, api) {
     const m = api[name]
     if (!m) break
     api[`${name}Raw`] = m
-    api[name] = (...args) => trackPromise(m(...args)).then(x => castAndCache(x[singular]))
+    api[name] = (...args) => trackPromise(m(...args).then(x => castAndCache(x[singular])))
   }
 
   api.pending = () => api.promises.length > 0
