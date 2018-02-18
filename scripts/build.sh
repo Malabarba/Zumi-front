@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -ex
 
 scripts="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
