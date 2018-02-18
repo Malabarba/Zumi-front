@@ -20,3 +20,16 @@ const app = new Vue({
   router,
   render: h => h(App)
 })
+
+if (Vue.config.devtools) {
+  window.api = Api
+  window.app = app
+  window.Vue = Vue
+  window.process = process
+} else {
+  if(!window.console) window.console = {};
+  var methods = ["log", "debug", "warn", "info"];
+  for(var i=0;i<methods.length;i++){
+    console[methods[i]] = function(){};
+  }
+}
