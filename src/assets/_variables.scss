@@ -8,8 +8,9 @@ $app-font: 'Montserrat', 'Helvetica Neue', Arial, Helvetica, sans-serif;
 // Colors
 $blue: rgb(0, 147, 221); //blue zumi color
 $primary: $black;
-$primary-hover: #292929;
-$secondary-hover: #ddd;
+$primary-hover: $grey-darker;
+$background: $grey-lighter;
+$secondary-hover: $background;
 $secondary30: rgba(255, 255, 255, 0.5);
 $secondary70: rgba(255, 255, 255, 0.7);
 $title-color: $grey-darker;
