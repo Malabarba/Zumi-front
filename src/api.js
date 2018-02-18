@@ -58,18 +58,14 @@ function makeApi(model, api) {
     })
   }
 
-  for (name of api.promiseMehods) {
+  for (name of api.promiseMethods) {
     const m = api[name]
-    if (!m) throw `API Method declared but not defined: ${name}`
+    if (!m) console.log(`API Method declared but not defined:`, name, m)
     api[name] = (...args) => trackPromise(m(...args))
   }
 
   api.pending = () => api.promises.length > 0
-  api.queue = function(f) {
-    const fn = function(...args) {
-      // console.log('queued: ', api.state, api.state.email, api.loggedIn, api.promises);
-      return f(...args)
-    }
+  api.queue = function(fn) {
     if (api.pending()) api.promises[api.promises.length - 1].finally(fn)
     else fn()
   }
