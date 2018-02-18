@@ -39,11 +39,10 @@
                 @error="e => errors.phone = e"
                 :spec="{ minLength: [11], maxLength: [11] }"/>
 
-    <div class="field column is-12">
+    <div v-if="isCreate" class="field column is-12">
       <div class="control">
         <label class="checkbox">
-          <input v-model="me.privacy_contract" type="checkbox"
-                 true-value="1.0" required>
+          <input @input="setPrivacy" type="checkbox" true-value="1.0" required>
           Marque esta caixa se você concorda com os
           <a href="#">termos de uso e privacidade</a>.
         </label>
@@ -54,7 +53,7 @@
       <div class="control" :title="firstError">
         <btn :l="isCreate ? 'Enviar' : 'Salvar'" type="submit"
              :class="{ 'is-loading': running }"
-             :disabled="!me.privacy_contract || !!firstError || running"/>
+             :disabled="!!firstError || running"/>
       </div>
       <div class="control">
         <btn l="Cancelar" as="text" type="reset" @click="$router.go(-1)"/>
@@ -80,14 +79,20 @@ export default {
     return {
       me: {...Api.me.state},
       isCreate: create,
-      errors: { first_name: true, surname: true, email: true, password: create, phone: true, cpf: create, birth_date: true }
+      errors: { first_name: true,
+                surname: true,
+                email: true,
+                password: create,
+                phone: true,
+                cpf: create,
+                birth_date: true,
+                privacy_contract: create ? 'É necessário aceitar os termos.' : false }
     }
   },
 
   computed: {
     firstError() {
-      return Object.values(this.errors).find(x => x) ||
-             (!this.me.privacy_contract ? 'É necessário aceitar os termos.' : null)
+      return Object.values(this.errors).find(x => x)
     }
   },
 
@@ -105,6 +110,13 @@ export default {
       if (this.firstError) return false
       if (this.isCreate) Api.me.create(this.me)
       else Api.me.update(this.me)
+    },
+
+    setPrivacy(event) {
+      console.log(event)
+      this.me.privacy_contract = event.target.value
+      if (this.isCreate && !this.me.privacy_contract)
+        this.errors.privacy_contract = 'É necessário aceitar os termos.'
     }
   }
 }
