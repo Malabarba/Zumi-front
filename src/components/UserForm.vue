@@ -42,7 +42,7 @@
     <div v-if="isCreate" class="field column is-12">
       <div class="control">
         <label class="checkbox">
-          <input @input="setPrivacy" type="checkbox" true-value="1.0" required>
+          <input v-model="me.privacy_contract_version" type="checkbox" true-value="1.0" required>
           Marque esta caixa se você concorda com os
           <a href="#">termos de uso e privacidade</a>.
         </label>
@@ -94,15 +94,19 @@ export default {
                 password: create,
                 phone: true,
                 cpf: create,
-                birth_date: true,
-                privacy_contract: create ? 'É necessário aceitar os termos.' : false }
+                birth_date: true }
     }
   },
   mounted() { this.feedback = null },
 
   computed: {
+    privacyError() {
+      console.log(this.me)
+      return (this.isCreate && !this.me.privacy_contract_version) ?
+             'É necessário aceitar os termos.' : null
+    },
     firstError() {
-      return Object.values(this.errors).find(x => x)
+      return Object.values(this.errors).find(x => x) || this.privacyError
     }
   },
 
@@ -121,13 +125,6 @@ export default {
       else Api.me.update(this.me)
               .then(() => this.feedback = 'success')
               .catch(this.catchError)
-    },
-
-    setPrivacy(event) {
-      console.log(event)
-      this.me.privacy_contract = event.target.value
-      if (this.isCreate && !this.me.privacy_contract)
-        this.errors.privacy_contract = 'É necessário aceitar os termos.'
     }
   }
 }
