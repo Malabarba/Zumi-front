@@ -66,7 +66,7 @@
 
     <article v-if="feedback && feedback !== 'success'" class="message is-danger">
       <ul class="message-body">
-        <li v-for="msg in feedback">{{msg}}</li>
+        <li v-for="msg in feedback" :key="msg">{{msg}}</li>
       </ul>
     </article>
   </formed>
@@ -104,8 +104,8 @@ export default {
   computed: {
     privacyError() {
       console.log(this.me)
-      return (this.isCreate && !this.me.privacy_contract_version) ?
-             'É necessário aceitar os termos.' : null
+      return (this.isCreate && !this.me.privacy_contract_version)
+           ? 'É necessário aceitar os termos.' : null
     },
     firstError() {
       return Object.values(this.errors).find(x => x) || this.privacyError
