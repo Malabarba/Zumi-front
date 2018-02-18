@@ -14,19 +14,24 @@ Vue.use(VueHead)
 Vue.use(Router)
 
 const me = Api.me
-const logged = { beforeEnter: (_, _2, next) => { me.queue(() => me.loggedIn ? next() : next('/')) } }
+const logged = { beforeEnter: (to, _from, next) => {
+  console.log('[Router] Checking if logged');
+  const failRoute = { path: '/cadastro', query: { redirect: to.fullPath } }
+  me.queue(() => me.state.email ? next() : next(failRoute))
+} }
 const notLogged = { beforeEnter: (_, _2, next) => { me.queue(() => !me.loggedIn ? next() : next('/')) } }
 
+/* eslint-disable no-multi-spaces */
 export default new Router({
   mode: 'history',
   routes: [
-    {path: '/', name: 'Home', component: Home},
-    {path: '/cadastro', name: 'Register', component: Register, ...notLogged},
-    {path: '/meu-cadastro', name: 'UpdateMe', component: UpdateMe, ...logged},
-    {path: '/troca-de-senha', name: 'UpdatePassword', component: UpdateMe},
-    {path: '/como-funciona', name: 'HowItWorks', component: HowItWorks},
-    {path: '/imoveis', props: {hasMap: false}, name: 'ListingIndex', component: ListingIndex},
-    {path: '/imoveis-no-mapa', props: {hasMap: true}, name: 'ListingMap', component: ListingIndex},
-    {path: '/imovel/:uniq_hash', props: true, name: 'ListingShow', component: ListingShow}
+    {path: '/',                  component: Home,         name: 'Home'},
+    {path: '/cadastro',          component: Register,     name: 'Register',        ...notLogged},
+    {path: '/meu-cadastro',      component: UpdateMe,     name: 'UpdateMe',        ...logged},
+    {path: '/troca-de-senha',    component: UpdateMe,     name: 'UpdatePassword'},
+    {path: '/como-funciona',     component: HowItWorks,   name: 'HowItWorks'},
+    {path: '/imoveis',           component: ListingIndex, name: 'ListingIndex',    props: {hasMap: false}},
+    {path: '/imoveis-no-mapa',   component: ListingIndex, name: 'ListingMap',      props: {hasMap: true}},
+    {path: '/imovel/:uniq_hash', component: ListingShow,  name: 'ListingShow',     props: true}
   ]
 })
