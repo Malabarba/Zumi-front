@@ -65,7 +65,9 @@
     </article>
 
     <article v-if="feedback && feedback !== 'success'" class="message is-danger">
-      <div class="message-body">{{feedback}}</div>
+      <ul class="message-body">
+        <li v-for="msg in feedback">{{msg}}</li>
+      </ul>
     </article>
   </formed>
 </template>
@@ -113,7 +115,7 @@ export default {
   methods: {
     catchError(e) {
       console.log(e)
-      if (e.response.status === 422) this.feedback = e.response.data.errors
+      if (e.response.status === 422) this.feedback = e.response.data.messages
       else this.feedback = e.toString()
     },
     submit() {
