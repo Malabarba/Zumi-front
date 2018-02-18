@@ -21,17 +21,25 @@ const logged = { beforeEnter: (to, _from, next) => {
 } }
 const notLogged = { beforeEnter: (_, _2, next) => { me.queue(() => !me.loggedIn ? next() : next('/')) } }
 
+const cName = c => c.name || c.__file.replace('src/pages/', '').replace('.vue', '')
+function entryToRoute(pr) {
+  return { path: pr[0], name: cName(pr[1].component), ...pr[1] }
+}
+const makeRoutes = routes => Object.entries(routes).map(entryToRoute)
+
 /* eslint-disable no-multi-spaces */
+/* eslint-disable key-spacing */
+const routes = {
+  '/'                 : { component: Home },
+  '/cadastro'         : { component: Register,     props: true, ...notLogged },
+  '/meu-cadastro'     : { component: UpdateMe,     ...logged },
+  '/troca-de-senha'   : { component: UpdateMe,     name: 'UpdatePassword' },
+  '/como-funciona'    : { component: HowItWorks },
+  '/imoveis'          : { component: ListingIndex, props: { hasMap: false } },
+  '/imoveis-no-mapa'  : { component: ListingIndex, name: 'ListingMap', props: { hasMap: true } },
+  '/imovel/:uniq_hash': { component: ListingShow,  props: true }
+}
 export default new Router({
   mode: 'history',
-  routes: [
-    {path: '/',                  component: Home,         name: 'Home'},
-    {path: '/cadastro',          component: Register,     name: 'Register',        ...notLogged},
-    {path: '/meu-cadastro',      component: UpdateMe,     name: 'UpdateMe',        ...logged},
-    {path: '/troca-de-senha',    component: UpdateMe,     name: 'UpdatePassword'},
-    {path: '/como-funciona',     component: HowItWorks,   name: 'HowItWorks'},
-    {path: '/imoveis',           component: ListingIndex, name: 'ListingIndex',    props: {hasMap: false}},
-    {path: '/imoveis-no-mapa',   component: ListingIndex, name: 'ListingMap',      props: {hasMap: true}},
-    {path: '/imovel/:uniq_hash', component: ListingShow,  name: 'ListingShow',     props: true}
-  ]
+  routes: makeRoutes(routes)
 })
