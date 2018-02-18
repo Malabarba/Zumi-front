@@ -22,6 +22,7 @@ if (Vue.config.devtools) {
   window.api = Api
   window.app = app
   window.Vue = Vue
+  window.router = router
   window.process = process
 } else {
   if (!window.console) window.console = {}
