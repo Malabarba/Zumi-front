@@ -71,7 +71,7 @@ import Formed from '@/components/Formed'
 
 export default {
   components: {FormField, Formed},
-  mixin: [Api.me.mixin],
+  mixins: [Api.me.mixin],
   props: {
     mode: { required: true, type: String }
   },

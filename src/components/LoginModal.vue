@@ -33,7 +33,7 @@ import Formed from '@/components/Formed'
 
 export default {
   components: {Formed, FormField},
-  mixin: [Api.me.mixin],
+  mixins: [Api.me.mixin],
   data() {
     return {
       active: false,
