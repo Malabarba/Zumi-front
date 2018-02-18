@@ -27,7 +27,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     before (app) {
       app.use('/__open-in-editor', openInEditor('emacsclient'))
     },
-    clientLogLevel: 'info',
+    clientLogLevel: 'warning',
     historyApiFallback: {
       rewrites: [
         { from: /.*/, to: path.posix.join(config.dev.assetsPublicPath, 'index.html') },
