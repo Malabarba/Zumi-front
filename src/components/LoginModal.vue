@@ -1,5 +1,5 @@
 <template>
-  <div v-if="active" id="LoginForm" @keyup.esc.exact="close"
+  <div v-if="active && !loggedIn" id="LoginForm" @keyup.esc.exact="close"
        class="modal" style="display: initial">
     <div class="modal-background" @click="close"></div>
     <formed class="modal-card" @submit="submit">
@@ -17,7 +17,7 @@
                     :spec="validations.password"/>
       </section>
       <footer class="modal-card-foot">
-        <btn ref="submit" l="Enviar" type="submit" :disabled="running"
+        <btn l="Enviar" type="submit" :disabled="running"
              :class="{ 'is-loading': running }"/>
         <btn as="text" l="Cancelar" @click="close" aria-label="close"/>
       </footer>
@@ -47,6 +47,7 @@ export default {
   },
   created() { EventBus.$on('login-modal', this.open) },
 
+  computed: { loggedIn: () => Api.me.loggedIn },
   methods: {
     close() { this.active = false },
     open() { this.active = true },

@@ -78,6 +78,7 @@ export const listing = makeApi(Listing, {
 
 export const me = makeApi(User, {
   state: new User(),
+  get loggedIn() { return !!this.state.email },
   cache(me) { Object.assign(this.state, me) },
   show: () => get('/me'),
   create: (user) => post('/me', { user }),
