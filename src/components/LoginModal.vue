@@ -19,7 +19,9 @@
       <footer class="modal-card-foot">
         <btn l="Enviar" type="submit" :disabled="running"
              :class="{ 'is-loading': running }"/>
-        <btn as="text" l="Cancelar" @click="close" aria-label="close"/>
+        <btn as="text" l="Cancelar" @click="close"
+             aria-label="close" style="margin: 0 auto" />
+        <btn l="Não tenho login" @click="register" />
       </footer>
     </formed>
   </div>
@@ -38,6 +40,7 @@ export default {
     return {
       active: false,
       afterLogin: null,
+      formQuery: {},
       me: { email: null, password: null },
       errors: { email: true, password: null },
       validations: {
@@ -51,9 +54,14 @@ export default {
   computed: { loggedIn: () => Api.me.loggedIn },
   methods: {
     close() { this.active = false },
-    open({afterLogin} = {}) {
+    open({afterLogin, route} = {}) {
       this.active = true
       this.afterLogin = afterLogin
+      this.formQuery = route ? { redirect: route } : {}
+    },
+    register() {
+      this.active = false
+      this.$router.push({name: 'Register', query: this.formQuery})
     },
     submit() {
       Api.me.login(this.me)

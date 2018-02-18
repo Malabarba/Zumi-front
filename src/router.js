@@ -17,7 +17,9 @@ Vue.use(Router)
 const me = Api.me
 const logged = { beforeEnter: (to, _from, next) => {
   console.log('[Router] Checking if logged')
-  me.queue(() => me.state.email ? next() : EventBus.$emit('login-modal', { afterLogin: next }))
+  me.queue(() => me.state.email
+           ? next()
+           : EventBus.$emit('login-modal', { afterLogin: next, route: to.fullPath }))
 } }
 const notLogged = { beforeEnter: (_, _2, next) => { me.queue(() => !me.loggedIn ? next() : next('/')) } }
 
@@ -31,7 +33,7 @@ const makeRoutes = routes => Object.entries(routes).map(entryToRoute)
 /* eslint-disable key-spacing */
 const routes = {
   '/'                 : { component: Home },
-  '/cadastro'         : { component: Register,     props: true, ...notLogged },
+  '/cadastro'         : { component: Register,     ...notLogged },
   '/meu-cadastro'     : { component: UpdateMe,     ...logged },
   '/troca-de-senha'   : { component: UpdateMe,     name: 'UpdatePassword' },
   '/como-funciona'    : { component: HowItWorks },

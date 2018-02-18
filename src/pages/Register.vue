@@ -26,7 +26,6 @@ import EventBus from '@/event-bus'
 // import Api from '@/api'
 
 export default {
-  name: 'Register',
   head: buildMeta({title: 'Cadastro',
                    description: 'Crie seu cadastro de comprador ou vendedor na Zumi'}),
   components: {UserForm},

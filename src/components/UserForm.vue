@@ -90,6 +90,7 @@ export default {
       me: {...Api.me.state},
       feedback: null,
       isCreate: create,
+      afterCreate: this.$route.query.redirect || '/',
       errors: { first_name: true,
                 surname: true,
                 email: true,
@@ -122,7 +123,7 @@ export default {
       this.feedback = null
       if (this.firstError) return false
       if (this.isCreate) Api.me.create(this.me)
-                            .then(() => this.$router.push('/'))
+                            .then(() => this.$router.push(this.afterCreate))
                             .catch(this.catchError)
       else Api.me.update(this.me)
               .then(() => this.feedback = 'success')
