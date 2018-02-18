@@ -8,13 +8,10 @@ import Btn from './components/Btn'
 
 Api.me.show()
 
-Vue.config.productionTip = false
-
 Vue.component('f-a', AppIcon)
 Vue.component('app-footer', AppFooter)
 Vue.component('btn', Btn)
 
-/* eslint-disable no-unused-vars */
 const app = new Vue({
   el: '#app',
   router,
@@ -27,9 +24,8 @@ if (Vue.config.devtools) {
   window.Vue = Vue
   window.process = process
 } else {
-  if(!window.console) window.console = {};
-  var methods = ["log", "debug", "warn", "info"];
-  for(var i=0;i<methods.length;i++){
-    console[methods[i]] = function(){};
+  if (!window.console) window.console = {}
+  for (const method in ['log', 'debug', 'warn', 'info']) {
+    console[method] = function() {}
   }
 }
