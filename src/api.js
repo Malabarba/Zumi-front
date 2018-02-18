@@ -9,10 +9,15 @@ function logIt(x) {
   return x
 }
 
-const get = (path, options) => axios.get(`${baseUrl}${path}`, options).then(logIt).then(x => x.data)
-const del = (path, options) => axios.delete(`${baseUrl}${path}`, options).then(logIt)
-const post = (path, options) => axios.post(`${baseUrl}${path}`, options).then(logIt).then(x => x && x.data)
-const patch = (path, options) => axios.patch(`${baseUrl}${path}`, options).then(logIt).then(x => x && x.data)
+function request(method, path, options) {
+  console.log('[Requesting]', method, path, options)
+  return axios[method](`${baseUrl}${path}`, options).then(logIt)
+}
+
+const get = (...args) => request('get', ...args).then(x => x.data)
+const del = (...args) => request('delete', ...args)
+const post = (...args) => request('post', ...args).then(x => x && x.data)
+const patch = (...args) => request('patch', ...args).then(x => x && x.data)
 
 // if (state[path]) fn(state[path])
 //   .then(response => state[path] = response)
