@@ -37,6 +37,7 @@ export default {
   data() {
     return {
       active: false,
+      afterLogin: null,
       me: { email: null, password: null },
       errors: { email: true, password: null },
       validations: {
@@ -50,9 +51,14 @@ export default {
   computed: { loggedIn: () => Api.me.loggedIn },
   methods: {
     close() { this.active = false },
-    open() { this.active = true },
+    open({afterLogin} = {}) {
+      this.active = true
+      this.afterLogin = afterLogin
+    },
     submit() {
-      Api.me.login(this.me).then(this.close)
+      Api.me.login(this.me)
+         .then(this.close)
+         .then(this.afterLogin)
     }
   }
 }

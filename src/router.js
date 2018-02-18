@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueHead from 'vue-head'
 import Router from 'vue-router'
 import Api from '@/api'
+import EventBus from '@/event-bus'
 
 import Home from '@/pages/Home'
 import HowItWorks from '@/pages/HowItWorks'
@@ -15,9 +16,8 @@ Vue.use(Router)
 
 const me = Api.me
 const logged = { beforeEnter: (to, _from, next) => {
-  console.log('[Router] Checking if logged');
-  const failRoute = { path: '/cadastro', query: { redirect: to.fullPath } }
-  me.queue(() => me.state.email ? next() : next(failRoute))
+  console.log('[Router] Checking if logged')
+  me.queue(() => me.state.email ? next() : EventBus.$emit('login-modal', { afterLogin: next }))
 } }
 const notLogged = { beforeEnter: (_, _2, next) => { me.queue(() => !me.loggedIn ? next() : next('/')) } }
 
