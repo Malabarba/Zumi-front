@@ -59,6 +59,14 @@
         <btn l="Cancelar" as="text" type="reset" @click="$router.go(-1)"/>
       </div>
     </div>
+
+    <article v-if="feedback === 'success'" class="message is-success">
+      <div class="message-body">Alterações salvas com sucesso</div>
+    </article>
+
+    <article v-if="feedback && feedback !== 'success'" class="message is-danger">
+      <div class="message-body">{{feedback}}</div>
+    </article>
   </formed>
 </template>
 
@@ -78,6 +86,7 @@ export default {
     const create = this.mode === 'create'
     return {
       me: {...Api.me.state},
+      feedback: null,
       isCreate: create,
       errors: { first_name: true,
                 surname: true,
@@ -89,6 +98,7 @@ export default {
                 privacy_contract: create ? 'É necessário aceitar os termos.' : false }
     }
   },
+  mounted() { this.feedback = null },
 
   computed: {
     firstError() {
@@ -97,19 +107,20 @@ export default {
   },
 
   methods: {
-    showMe() {
-      window.vform = this
-      console.log(this)
-      console.log(this.me)
-      console.log(this.errors)
-      console.log(this.firstError)
+    catchError(e) {
+      console.log(e)
+      if (e.response.status === 422) this.feedback = e.response.data.errors
+      else this.feedback = e.toString()
     },
-
     submit() {
-      this.showMe()
+      this.feedback = null
       if (this.firstError) return false
       if (this.isCreate) Api.me.create(this.me)
+                            .then(() => this.$router.push('/'))
+                            .catch(this.catchError)
       else Api.me.update(this.me)
+              .then(() => this.feedback = 'success')
+              .catch(this.catchError)
     },
 
     setPrivacy(event) {
