@@ -30,18 +30,18 @@ function makeApi(model, api) {
   }
 
   const plural = model.plural
-  const index = api.index
-  if (index) {
-    api.indexRaw = index
+  if ('index' in api) {
+    const index = api.index.bind(api)
+    api.indexNoCache = index
     api.index = (...args) => index(...args).then(data => data[plural].map(castAndCache))
   }
 
   const singular = model.singular
   const methods = ['show', 'create', 'update', 'login']
   for (var name of methods) {
-    const m = api[name]
-    if (!m) break
-    api[`${name}Raw`] = m
+    if (!(name in api)) break
+    const m = api[name].bind(api)
+    api[`${name}NoCache`] = m
     api[name] = (...args) => m(...args).then(x => castAndCache(x[singular]))
   }
 
@@ -59,8 +59,9 @@ function makeApi(model, api) {
   }
 
   for (name of api.promiseMethods) {
-    const m = api[name]
-    if (!m) console.log(`API Method declared but not defined:`, name, m)
+    if (!(name in api)) console.log(`API Method declared but not defined:`, name)
+    const m = api[name].bind(api)
+    api[`${name}NoTrack`] = m
     api[name] = (...args) => trackPromise(m(...args))
   }
 
@@ -99,9 +100,7 @@ export const me = makeApi(User, {
   update: (user) => patch('/me', { user }),
   updatePassword: (user) => patch('/me/update_password', { user }),
   login: (user) => post('/sessions', { user }),
-  logout() {
-    return del('/sessions').then(() => this.cache(new User()))
-  }
+  logout() { return del('/sessions').then(() => this.cache(new User())) }
 })
 
 export default { listing, me }
