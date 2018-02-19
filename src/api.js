@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Listing, User } from '@/models'
+import { Listing, Property, User } from '@/models'
 import EventBus from '@/event-bus'
 
 const baseUrl = '/api/v1'
@@ -79,6 +79,17 @@ function makeApi(model, api) {
   return api
 }
 
+export const property = makeApi(Property, {
+  cache() {},
+
+  promiseMethods: ['index', 'show', 'create', 'update', 'list'],
+  index: () => get('/properties'),
+  show: (id) => get(`/property/${id}`),
+  create: (property) => post('/properties', { property }),
+  update: (id, property) => patch(`/property/${id}`, { property }),
+  list: (id, listing) => post(`/property/${id}/list`, { listing })
+})
+
 export const listing = makeApi(Listing, {
   // cache(l) { this.state[`/listing/${l.uniq_hash}`] = l },
   cache() {},
@@ -103,4 +114,4 @@ export const me = makeApi(User, {
   logout() { return del('/sessions').then(() => this.cache(new User())) }
 })
 
-export default { listing, me }
+export default { listing, property, me }

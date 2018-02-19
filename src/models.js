@@ -1,9 +1,14 @@
 import Money from '@/components/money'
 
 export class Property {
+  static singular = 'property';
+  static plural = 'properties';
+
   static from(data) {
     return new Property(data)
   }
+
+  static types = { studio: 'Studio', apartment: 'Apartamento', house: 'Casa', lot: 'Terreno' }
 
   constructor({uniq_hash, address, photos, type, type_text,
                toilet_count, bath_count, bedroom_count,
@@ -35,8 +40,6 @@ export class Property {
     }
   }
 }
-Property.singular = 'property'
-Property.plural = 'properties'
 
 class PropertyDetail {
   constructor(value, label, icon) {
@@ -47,6 +50,9 @@ class PropertyDetail {
 }
 
 export class Listing {
+  static singular = 'listing';
+  static plural = 'listings';
+
   static from(data) {
     return new Listing(data)
   }
@@ -65,10 +71,11 @@ export class Listing {
     return this.property && this.property.descList
   }
 }
-Listing.singular = 'listing'
-Listing.plural = 'listings'
 
 export class User {
+  static singular = 'user';
+  static plural = 'users';
+
   static from(data) {
     return new User(data)
   }
@@ -93,5 +100,3 @@ export class User {
     this.favorite_listings = favorite_listings && favorite_listings.map(Listing.from)
   }
 }
-User.singular = 'user'
-User.plural = 'users'
