@@ -10,6 +10,7 @@ import ListingIndex from '@/pages/ListingIndex'
 import ListingShow from '@/pages/ListingShow'
 import Register from '@/pages/Register'
 import UpdateMe from '@/pages/UpdateMe'
+import CreateProperty from '@/pages/CreateProperty'
 
 Vue.use(VueHead)
 Vue.use(Router)
@@ -39,7 +40,8 @@ const routes = {
   '/como-funciona'    : { component: HowItWorks },
   '/imoveis'          : { component: ListingIndex, props: { hasMap: false } },
   '/imoveis-no-mapa'  : { component: ListingIndex, name: 'ListingMap', props: { hasMap: true } },
-  '/imovel/:uniq_hash': { component: ListingShow,  props: true }
+  '/imovel/:uniq_hash': { component: ListingShow,  props: true },
+  '/venda-seu-imovel' : { component: CreateProperty, ...logged }
 }
 export default new Router({
   mode: 'history',
