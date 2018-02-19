@@ -22,6 +22,10 @@ export default {
 @import 'assets/_variables.scss';
 @import "~bulma/bulma";
 
+article.form-description > p:not(last-child) {
+  margin-bottom: 1rem;
+}
+
 .button.is-primary:hover,
 .button.is-primary.is-hovered {
   background-color: $primary-hover;

@@ -36,9 +36,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-p {
-  margin-bottom: 1rem;
-}
-</style>
